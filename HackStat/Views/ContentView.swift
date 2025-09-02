@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+	@State private var contributions = [Contribution]()
+	
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+		List(contributions, id: \.id) { contribution in
+			Text("\(contribution.date) - \(contribution.contributionsCount)")
+		}
+		.task {
+			let leetCodeContributions = LeetCodeContributionsProvider()
+			let result = await leetCodeContributions.getContributions(for: "yatoenough")
+			
+			switch result {
+			case .success(let leetCodeContributions):
+				contributions = leetCodeContributions
+			case .failure(let error):
+				print("Error fetching contribuions: \(error)")
+			}
+	
+		}
     }
 }
 

@@ -15,18 +15,21 @@ struct ContentView: View {
 			Text("\(contribution.date) - \(contribution.contributionsCount)")
 		}
 		.task {
-			let leetCodeContributions = LeetCodeContributionsProvider()
-			let result = await leetCodeContributions.getContributions(for: "yatoenough")
-			
-			switch result {
-			case .success(let leetCodeContributions):
-				contributions = leetCodeContributions
-			case .failure(let error):
-				print("Error fetching contribuions: \(error)")
-			}
-	
+			await fetchContributions()
 		}
     }
+	
+	func fetchContributions() async {
+		let leetCodeContributions = LeetCodeContributionsProvider()
+		let result = await leetCodeContributions.getContributions(for: "yatoenough")
+		
+		switch result {
+		case .success(let leetCodeContributions):
+			contributions = leetCodeContributions
+		case .failure(let error):
+			print("Error fetching contributions: \(error)")
+		}
+	}
 }
 
 #Preview {

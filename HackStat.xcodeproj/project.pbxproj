@@ -21,15 +21,31 @@
 		7491B0C82E6772410017B0F0 /* HackStatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HackStatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7491B0E82E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStat" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tests/HackStatTests.swift,
+			);
+			target = 7491B0BA2E6772400017B0F0 /* HackStat */;
+		};
+		7491B0E92E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStatTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tests/HackStatTests.swift,
+			);
+			target = 7491B0C72E6772410017B0F0 /* HackStatTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7491B0BD2E6772400017B0F0 /* HackStat */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7491B0E82E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStat" target */,
+				7491B0E92E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStatTests" target */,
+			);
 			path = HackStat;
-			sourceTree = "<group>";
-		};
-		7491B0CB2E6772410017B0F0 /* HackStatTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = HackStatTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -56,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				7491B0BD2E6772400017B0F0 /* HackStat */,
-				7491B0CB2E6772410017B0F0 /* HackStatTests */,
 				7491B0BC2E6772400017B0F0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -107,9 +122,6 @@
 			);
 			dependencies = (
 				7491B0CA2E6772410017B0F0 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				7491B0CB2E6772410017B0F0 /* HackStatTests */,
 			);
 			name = HackStatTests;
 			packageProductDependencies = (

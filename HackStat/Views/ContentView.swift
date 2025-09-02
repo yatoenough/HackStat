@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+	private let contributionProviders: [ContributionsProvider] = [
+		LeetCodeContributionsProvider()
+	]
+	
 	@State private var contributions = [Contribution]()
 	
     var body: some View {
@@ -15,19 +19,33 @@ struct ContentView: View {
 			Text("\(contribution.date) - \(contribution.contributionsCount)")
 		}
 		.task {
-			await fetchContributions()
+			contributions = await fetchContributions()
 		}
     }
 	
-	func fetchContributions() async {
-		let leetCodeContributions = LeetCodeContributionsProvider()
-		let result = await leetCodeContributions.getContributions(for: "yatoenough")
-		
-		switch result {
-		case .success(let leetCodeContributions):
-			contributions = leetCodeContributions
-		case .failure(let error):
-			print("Error fetching contributions: \(error)")
+	func fetchContributions() async -> [Contribution] {
+		return await withTaskGroup(of: [Contribution].self) { group in
+			var results = [Contribution]()
+
+			for provider in contributionProviders {
+				group.addTask {
+					let result = await provider.getContributions(for: "yatoenough")
+					
+					switch result {
+					case .success(let fetchedContributions):
+						return fetchedContributions
+					case .failure(let error):
+						print("Error fetching contributions: \(error)")
+						return []
+					}
+				}
+			}
+
+			for await result in group {
+				results.append(contentsOf: result)
+			}
+			
+			return results
 		}
 	}
 }

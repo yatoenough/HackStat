@@ -26,9 +26,7 @@ struct LeetCodeContributionsProvider: ContributionsProvider {
 		let data: DataResponse
 	}
 
-	func getContributions(for username: String) async -> Result<
-		[Contribution], Error
-	> {
+	func getContributions(for username: String) async -> Result<[Contribution], Error> {
 		let url = URL(string: Strings.leetCodeApiURL)!
 
 		let request = GraphQLRequestBuilder.build(

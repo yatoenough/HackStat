@@ -6,5 +6,5 @@
 //
 
 protocol ContributionsProvider: Sendable {
-	func getContributions(for username: String) async -> [Contribution]
+	func getContributions(for username: String) async -> Result<[Contribution], Error>
 }

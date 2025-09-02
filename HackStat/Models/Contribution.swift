@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Contribution: Identifiable, Codable {
-	var id: UUID
+struct Contribution: Identifiable {
+	let id = UUID()
 	var date: Date
 	var contributionsCount: Int
 }

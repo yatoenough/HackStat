@@ -33,8 +33,8 @@ struct ContentView: View {
 					let result = await provider.getSubmissions(for: "yatoenough")
 					
 					switch result {
-					case .success(let fetchedSumbissions):
-						return fetchedSumbissions
+					case .success(let fetchedSubmissions):
+						return fetchedSubmissions
 					case .failure(let error):
 						print("Error fetching submissions: \(error)")
 						return []

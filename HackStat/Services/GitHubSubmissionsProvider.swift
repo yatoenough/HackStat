@@ -36,29 +36,12 @@ private struct GitHubResponse: Decodable {
 }
 
 struct GitHubSubmissionsProvider: SubmissionsProvider {
-	private let graphQLQuery = """
-		query getSubmissions($username: String!) { 
-			user(login: $username) {
-				contributionsCollection {
-					contributionCalendar {
-						weeks {
-							contributionDays {
-								contributionCount
-								date
-							}
-						}
-					}
-				}
-			}
-		}
-		"""
-	
 	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
 		let url = URL(string: Strings.gitHubApiURL)!
 
 		let graphQLRequest = GraphQLRequest(
 			url: url,
-			query: graphQLQuery,
+			query: Strings.gitHubGraphQLQuery,
 			variables: ["username": username]
 		)
 		

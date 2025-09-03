@@ -18,20 +18,12 @@ private struct LeetCodeResponse: Decodable {
 }
 
 struct LeetCodeSubmissionsProvider: SubmissionsProvider {
-	private let graphQLQuery = """
-		query getSubmissions($username: String!) {
-			matchedUser(username: $username) {
-				submissionCalendar
-			}
-		}
-		"""
-
 	func getSubmissions(for username: String) async -> Result<[Submission], Error> {
 		let url = URL(string: Strings.leetCodeApiURL)!
 
 		let graphQLRequest = GraphQLRequest(
 			url: url,
-			query: graphQLQuery,
+			query: Strings.leetCodeGraphQLQuery,
 			variables: ["username": username]
 		)
 

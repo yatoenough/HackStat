@@ -29,14 +29,14 @@ struct LeetCodeContributionsProvider: ContributionsProvider {
 	func getContributions(for username: String) async -> Result<[Contribution], Error> {
 		let url = URL(string: Strings.leetCodeApiURL)!
 
-		let request = GraphQLRequestBuilder.build(
+		let graphQLRequest = GraphQLRequest(
 			url: url,
 			query: graphQLQuery,
 			variables: ["username": username]
 		)
 
 		do {
-			let (data, _) = try await URLSession.shared.data(for: request)
+			let (data, _) = try await URLSession.shared.data(for: graphQLRequest.request)
 			let decodedResponse = try JSONDecoder().decode(LeetCodeGraphQLResponse.self, from: data)
 			let submissionCalendar = decodedResponse.data.matchedUser.submissionCalendar
 

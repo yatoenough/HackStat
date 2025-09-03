@@ -1,5 +1,5 @@
 //
-//  GraphQLRequestBuilder.swift
+//  GraphQLRequest.swift
 //  HackStat
 //
 //  Created by Nikita Shyshkin on 02/09/2025.
@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct GraphQLRequestBuilder {
-	static func build(url: URL, query: String, variables: [String: Any]) -> URLRequest {
+struct GraphQLRequest {
+	let request: URLRequest
+	
+	init(url: URL, query: String, variables: [String: Any]) {
 		var request = URLRequest(url: url)
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -17,6 +19,6 @@ struct GraphQLRequestBuilder {
 		
 		request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 		
-		return request
+		self.request = request
 	}
 }

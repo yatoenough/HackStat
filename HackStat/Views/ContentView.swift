@@ -9,19 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
 	@State private var submissionsViewModel = SubmissionsViewModel()
-	
-    var body: some View {
-		if submissionsViewModel.submissions.isEmpty {
-			ProgressView()
-				.progressViewStyle(.circular)
-		} else {
-			List(submissionsViewModel.submissions, id: \.id) { submission in
-				Text("\(submission.date) - \(submission.submissionsCount)")
-			}
+
+	var body: some View {
+		List(submissionsViewModel.submissions, id: \.id) { submission in
+			Text("\(submission.date) - \(submission.submissionsCount)")
 		}
-    }
+		.task {
+			await submissionsViewModel.fetchSubmissions(for: "yatoenough")
+		}
+	}
 }
 
 #Preview {
-    ContentView()
+	ContentView()
 }

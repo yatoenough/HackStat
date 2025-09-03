@@ -12,24 +12,18 @@ class SubmissionsViewModel {
 	private(set) var submissions = [Submission]()
 	
 	private let providers: [SubmissionsProvider] = [
-		LeetCodeSubmissionsProvider(),
-		GitHubSubmissionsProvider()
+		GitLabSubmissionsProvider(),
+		GitHubSubmissionsProvider(),
+		LeetCodeSubmissionsProvider()
 	]
 	
-	
-	init() {
-		Task {
-			await fetchSubmissions()
-		}
-	}
-	
-	func fetchSubmissions() async {
+	func fetchSubmissions(for username: String) async {
 		await withTaskGroup(of: [Submission].self) { group in
 			var results = [Submission]()
 
 			for provider in providers {
 				group.addTask {
-					let result = await provider.getSubmissions(for: "yatoenough")
+					let result = await provider.getSubmissions(for: username)
 					
 					switch result {
 					case .success(let fetchedSubmissions):
@@ -45,7 +39,7 @@ class SubmissionsViewModel {
 				results.append(contentsOf: result)
 			}
 			
-			submissions = results
+			submissions = results.sorted(by: { $0.date > $1.date})
 		}
 	}
 }

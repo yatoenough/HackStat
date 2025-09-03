@@ -7,4 +7,5 @@
 
 struct Strings {
 	static let leetCodeApiURL = "https://leetcode.com/graphql"
+	static let gitHubApiURL = "https://api.github.com/graphql"
 }

@@ -6,6 +6,9 @@
 ## MacOS
 .DS_Store
 
+## Credentials file
+HackStat/App/Credentials.swift
+
 ## User settings
 xcuserdata/
 

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
 	private let contributionProviders: [ContributionsProvider] = [
-		LeetCodeContributionsProvider()
+		LeetCodeContributionsProvider(),
+		GitHubContributionsProvider()
 	]
 	
 	@State private var contributions = [Contribution]()

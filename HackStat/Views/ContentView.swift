@@ -8,47 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-	private let submissionsProviders: [SubmissionsProvider] = [
-		LeetCodeSubmissionsProvider(),
-		GitHubSubmissionsProvider()
-	]
-	
-	@State private var submissions = [Submission]()
+	@State private var submissionsViewModel = SubmissionsViewModel()
 	
     var body: some View {
-		List(submissions, id: \.id) { submission in
-			Text("\(submission.date) - \(submission.submissionsCount)")
-		}
-		.task {
-			submissions = await fetchSubmissions()
+		if submissionsViewModel.submissions.isEmpty {
+			ProgressView()
+				.progressViewStyle(.circular)
+		} else {
+			List(submissionsViewModel.submissions, id: \.id) { submission in
+				Text("\(submission.date) - \(submission.submissionsCount)")
+			}
 		}
     }
-	
-	func fetchSubmissions() async -> [Submission] {
-		return await withTaskGroup(of: [Submission].self) { group in
-			var results = [Submission]()
-
-			for provider in submissionsProviders {
-				group.addTask {
-					let result = await provider.getSubmissions(for: "yatoenough")
-					
-					switch result {
-					case .success(let fetchedSubmissions):
-						return fetchedSubmissions
-					case .failure(let error):
-						print("Error fetching submissions: \(error)")
-						return []
-					}
-				}
-			}
-
-			for await result in group {
-				results.append(contentsOf: result)
-			}
-			
-			return results
-		}
-	}
 }
 
 #Preview {

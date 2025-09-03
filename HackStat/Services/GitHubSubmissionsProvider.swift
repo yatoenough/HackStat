@@ -1,5 +1,5 @@
 //
-//  GitHubContributionsProvider.swift
+//  GitHubSubmissionsProvider.swift
 //  HackStat
 //
 //  Created by Nikita Shyshkin on 03/09/2025.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-fileprivate struct GitHubResponse: Decodable {
+private struct GitHubResponse: Decodable {
 	struct Week: Decodable {
 		struct ContributionDay: Decodable {
 			let contributionCount: Int
@@ -35,9 +35,9 @@ fileprivate struct GitHubResponse: Decodable {
 	}
 }
 
-struct GitHubContributionsProvider: ContributionsProvider {
+struct GitHubSubmissionsProvider: SubmissionsProvider {
 	private let graphQLQuery = """
-		query getContributions($username: String!) { 
+		query getSubmissions($username: String!) { 
 			user(login: $username) {
 				contributionsCollection {
 					contributionCalendar {
@@ -53,7 +53,7 @@ struct GitHubContributionsProvider: ContributionsProvider {
 		}
 		"""
 	
-	func getContributions(for username: String) async -> Result<[Contribution], any Error> {
+	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
 		let url = URL(string: Strings.gitHubApiURL)!
 
 		let graphQLRequest = GraphQLRequest(
@@ -73,11 +73,11 @@ struct GitHubContributionsProvider: ContributionsProvider {
 			
 			let contributions = weeks.flatMap { week in
 				week.contributionDays.map { day in
-					Contribution(date: parseDate(day.date), contributionsCount: day.contributionCount)
+					Submission(date: parseDate(day.date), submissionsCount: day.contributionCount)
 				}
 			}
 
-			return .success(contributions.filter({ $0.contributionsCount > 0 }))
+			return .success(contributions.filter({ $0.submissionsCount > 0 }))
 		} catch {
 			return .failure(error)
 		}

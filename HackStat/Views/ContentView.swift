@@ -8,35 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
-	private let contributionProviders: [ContributionsProvider] = [
-		LeetCodeContributionsProvider(),
-		GitHubContributionsProvider()
+	private let submissionsProviders: [SubmissionsProvider] = [
+		LeetCodeSubmissionsProvider(),
+		GitHubSubmissionsProvider()
 	]
 	
-	@State private var contributions = [Contribution]()
+	@State private var submissions = [Submission]()
 	
     var body: some View {
-		List(contributions, id: \.id) { contribution in
-			Text("\(contribution.date) - \(contribution.contributionsCount)")
+		List(submissions, id: \.id) { submission in
+			Text("\(submission.date) - \(submission.submissionsCount)")
 		}
 		.task {
-			contributions = await fetchContributions()
+			submissions = await fetchSubmissions()
 		}
     }
 	
-	func fetchContributions() async -> [Contribution] {
-		return await withTaskGroup(of: [Contribution].self) { group in
-			var results = [Contribution]()
+	func fetchSubmissions() async -> [Submission] {
+		return await withTaskGroup(of: [Submission].self) { group in
+			var results = [Submission]()
 
-			for provider in contributionProviders {
+			for provider in submissionsProviders {
 				group.addTask {
-					let result = await provider.getContributions(for: "yatoenough")
+					let result = await provider.getSubmissions(for: "yatoenough")
 					
 					switch result {
-					case .success(let fetchedContributions):
-						return fetchedContributions
+					case .success(let fetchedSumbissions):
+						return fetchedSumbissions
 					case .failure(let error):
-						print("Error fetching contributions: \(error)")
+						print("Error fetching submissions: \(error)")
 						return []
 					}
 				}

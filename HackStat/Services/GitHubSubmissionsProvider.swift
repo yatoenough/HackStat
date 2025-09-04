@@ -11,7 +11,7 @@ private struct GitHubResponse: Decodable {
 	struct Week: Decodable {
 		struct ContributionDay: Decodable {
 			let contributionCount: Int
-			let date: String
+			let date: Date
 		}
 		let contributionDays: [ContributionDay]
 	}
@@ -50,13 +50,20 @@ struct GitHubSubmissionsProvider: SubmissionsProvider {
 
 		do {
 			let (data, _) = try await URLSession.shared.data(for: request)
-			let response = try JSONDecoder().decode(GitHubResponse.self, from: data)
+			
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "yyyy-MM-dd"
+			
+			let decoder = JSONDecoder()
+			decoder.dateDecodingStrategy = .formatted(dateFormatter)
+			
+			let response = try decoder.decode(GitHubResponse.self, from: data)
 			
 			let weeks = response.weeks
 			
 			let contributions = weeks.flatMap { week in
 				week.contributionDays.map { day in
-					Submission(date: parseDate(day.date), submissionsCount: day.contributionCount)
+					Submission(date: day.date, submissionsCount: day.contributionCount)
 				}
 			}
 
@@ -64,12 +71,6 @@ struct GitHubSubmissionsProvider: SubmissionsProvider {
 		} catch {
 			return .failure(error)
 		}
-	}
-	
-	private func parseDate(_ dateString: String) -> Date {
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-dd"
-		return dateFormatter.date(from: dateString)!
 	}
 	
 }

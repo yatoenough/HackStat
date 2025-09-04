@@ -35,23 +35,21 @@ struct CodeWarsSubmissionsProvider: SubmissionsProvider {
 				let response = try decoder.decode(CodeWarsResponse.self, from: data)
 				totalPages = response.totalPages
 
-				let dateGrouped = Dictionary(grouping: response.data) {
-					$0.completedAt
-				}
+				let dateGrouped = Dictionary(grouping: response.data) { $0.completedAt }
 
-				for submissionsGroup in dateGrouped {
-					let newSubmissionsData = Submission(
-						date: submissionsGroup.key,
-						submissionsCount: submissionsGroup.value.count,
+				for (date, fetchedSubmissions) in dateGrouped {
+					let newSubmission = Submission(
+						date: date,
+						submissionsCount: fetchedSubmissions.count,
 					)
 
-					submissions.append(newSubmissionsData)
+					submissions.append(newSubmission)
 				}
 				
 				currentPage += 1
-				
-				return .success(submissions)
 			}
+			
+			return .success(submissions)
 		} catch {
 			return .failure(error)
 		}

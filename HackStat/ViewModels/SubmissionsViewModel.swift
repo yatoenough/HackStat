@@ -42,4 +42,14 @@ class SubmissionsViewModel {
 			submissions = results.sorted(by: { $0.date > $1.date})
 		}
 	}
+	
+	#if DEBUG
+	static let mockInstance: SubmissionsViewModel = {
+		let providers: [SubmissionsProvider] = [
+			MockSubmissionsProvider()
+		]
+		
+		return SubmissionsViewModel(providers: providers)
+	}()
+	#endif
 }

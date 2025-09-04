@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
+	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
+
+	var body: some View {
+		List(submissionsViewModel.submissions, id: \.id) { submission in
+			Text("\(submission.date) - \(submission.submissionsCount)")
+		}
+		.task {
+			await submissionsViewModel.fetchSubmissions(for: "yatoenough")
+		}
+	}
 }
 
 #Preview {
-    ContentView()
+	ContentView()
+		.environment(SubmissionsViewModel.previewInstance)
 }

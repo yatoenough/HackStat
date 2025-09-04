@@ -10,6 +10,7 @@ struct Strings {
 	static let leetCodeApiURL = "https://leetcode.com/graphql"
 	static let gitHubApiURL = "https://api.github.com/graphql"
 	static let gitLabApiURL = "https://gitlab.com"
+	static let codeWarsApiURL = "https://www.codewars.com/api/v1"
 	
 	// MARK: - GraphQL Queries
 	static let leetCodeGraphQLQuery = """

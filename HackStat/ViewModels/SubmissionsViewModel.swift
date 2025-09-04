@@ -11,11 +11,11 @@ import Foundation
 class SubmissionsViewModel {
 	private(set) var submissions = [Submission]()
 	
-	private let providers: [SubmissionsProvider] = [
-		GitLabSubmissionsProvider(),
-		GitHubSubmissionsProvider(),
-		LeetCodeSubmissionsProvider()
-	]
+	private let providers: [SubmissionsProvider]
+	
+	init(providers: [SubmissionsProvider]) {
+		self.providers = providers
+	}
 	
 	func fetchSubmissions(for username: String) async {
 		await withTaskGroup(of: [Submission].self) { group in

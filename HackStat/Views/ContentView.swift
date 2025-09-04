@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-	@State private var submissionsViewModel = SubmissionsViewModel()
+	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
 
 	var body: some View {
 		List(submissionsViewModel.submissions, id: \.id) { submission in

@@ -44,12 +44,8 @@ class SubmissionsViewModel {
 	}
 	
 	#if DEBUG
-	static let mockInstance: SubmissionsViewModel = {
-		let providers: [SubmissionsProvider] = [
-			MockSubmissionsProvider()
-		]
-		
-		return SubmissionsViewModel(providers: providers)
+	static let previewInstance: SubmissionsViewModel = {
+		return SubmissionsViewModel(providers: [MockSubmissionsProvider()])
 	}()
 	#endif
 }

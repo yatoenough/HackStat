@@ -8,14 +8,18 @@
 import Foundation
 
 struct MockSubmissionsProvider: SubmissionsProvider {
+	private let returnsError: Bool
+	
+	init(returnsError: Bool = false) {
+		self.returnsError = returnsError
+	}
+	
 	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
-		let submissions = [
-			Submission(date: .now, submissionsCount: 3),
-			Submission(date: .now, submissionsCount: 6),
-			Submission(date: .now, submissionsCount: 2),
-		]
-		
-		return .success(submissions)
+		if returnsError {
+			struct MockError: Error {}
+			return .failure(MockError())
+		}
+		return .success(Submission.mockSubmissions)
 	}
 	
 }

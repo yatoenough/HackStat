@@ -22,5 +22,5 @@ struct ContentView: View {
 
 #Preview {
 	ContentView()
-		.environment(SubmissionsViewModel.mockInstance)
+		.environment(SubmissionsViewModel.previewInstance)
 }

@@ -25,14 +25,14 @@
 		7491B0E82E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStat" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Tests/HackStatTests.swift,
+				Tests/SubmissionsViewModelTests.swift,
 			);
 			target = 7491B0BA2E6772400017B0F0 /* HackStat */;
 		};
 		7491B0E92E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStatTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Tests/HackStatTests.swift,
+				Tests/SubmissionsViewModelTests.swift,
 			);
 			target = 7491B0C72E6772410017B0F0 /* HackStatTests */;
 		};

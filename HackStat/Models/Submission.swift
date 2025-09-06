@@ -17,15 +17,18 @@ struct Submission: Identifiable, Equatable {
 	}
 	
 	#if DEBUG
-	static let mockSubmissions = {
-		let date = Date()
-		
-		let submissions = [
-			Submission(date: date, submissionsCount: 3),
-			Submission(date: date, submissionsCount: 6),
-			Submission(date: date, submissionsCount: 2),
-		]
-		
+	static let mockSubmissions: [Submission] = {
+		var submissions = [Submission]()
+		let calendar = Calendar.current
+		let today = Date.now
+		for i in 0..<365 {
+			if let date = calendar.date(byAdding: .day, value: -i, to: today) {
+				let randomSubmissions = Int.random(in: 0...10)
+				if randomSubmissions > 0 {
+					submissions.append(Submission(date: date, submissionsCount: randomSubmissions))
+				}
+			}
+		}
 		return submissions
 	}()
 	#endif

@@ -11,12 +11,10 @@ struct ContentView: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
 
 	var body: some View {
-		List(submissionsViewModel.submissions, id: \.id) { submission in
-			Text("\(submission.date) - \(submission.submissionsCount)")
-		}
-		.task {
-			await submissionsViewModel.fetchSubmissions(for: "yatoenough")
-		}
+		SubmissionsGraph(submissions: submissionsViewModel.submissions)
+			.task {
+				await submissionsViewModel.fetchSubmissions(for: "yatoenough")
+			}
 	}
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct SubmissionsScreen: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
 	
-	@AppStorage("username") private var username = "yatoenough"
+	@AppStorage("username") private var username = ""
 
 	var body: some View {
 		NavigationStack {

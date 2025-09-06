@@ -13,33 +13,35 @@ struct SubmissionsScreen: View {
 	@AppStorage("username") private var username = "yatoenough"
 
 	var body: some View {
-		ScrollView {
-			VStack(alignment: .leading) {
-				Text("Submissions for: ")
-					.bold()
-				
-				TextField("Username", text: $username)
-					.onSubmit {
-						Task {
-							await fetchSubmissions()
+		NavigationStack {
+			ScrollView {
+				VStack(alignment: .leading) {
+					Text("Submissions for: ")
+						.bold()
+					
+					TextField("Username", text: $username)
+						.onSubmit {
+							Task {
+								await fetchSubmissions()
+							}
 						}
-					}
+				}
+				.padding([.leading, .top])
+				
+				if submissionsViewModel.submissions.isEmpty {
+					ProgressView()
+						.progressViewStyle(.circular)
+						.transition(.scale)
+				} else {
+					SubmissionsGraph(submissions: submissionsViewModel.submissions)
+						.padding(.horizontal)
+						.transition(.scale)
+				}
 			}
-			.padding([.leading, .top])
-			
-			if submissionsViewModel.submissions.isEmpty {
-				ProgressView()
-					.progressViewStyle(.circular)
-					.transition(.scale)
-			} else {
-				SubmissionsGraph(submissions: submissionsViewModel.submissions)
-					.padding(.horizontal)
-					.transition(.scale)
+			.navigationTitle("HackStat")
+			.task {
+				await fetchSubmissions()
 			}
-		}
-		.navigationTitle("HackStat")
-		.task {
-			await fetchSubmissions()
 		}
 	}
 	
@@ -49,8 +51,7 @@ struct SubmissionsScreen: View {
 }
 
 #Preview {
-	NavigationStack {
-		SubmissionsScreen()
-			.environment(SubmissionsViewModel.previewInstance)
-	}
+	SubmissionsScreen()
+		.environment(SubmissionsViewModel.previewInstance)
+	
 }

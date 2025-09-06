@@ -52,7 +52,7 @@ struct SubmissionsGraph: View {
         let today = calendar.startOfDay(for: Date())
 
 		VStack(alignment: .leading, spacing: 5) {
-			Text("\(submissions.count) submissions in last year")
+			Text("\(submissionsCount) submissions in the last year")
 				.bold()
 				.padding(.vertical)
 			

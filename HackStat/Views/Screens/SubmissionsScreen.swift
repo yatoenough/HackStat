@@ -10,7 +10,7 @@ import SwiftUI
 struct SubmissionsScreen: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
 	
-	@State private var username = "yatoenough"
+	@AppStorage("username") private var username = "yatoenough"
 
 	var body: some View {
 		ScrollView {

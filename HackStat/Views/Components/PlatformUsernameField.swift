@@ -15,13 +15,7 @@ struct PlatformUsernameField: View {
 	
 	var body: some View {
 		HStack {
-			Label {
-				Text(title)
-			} icon: {
-				image
-					.resizable()
-					.frame(width: 25, height: 25)
-			}
+			PlatformUsernameLabel(title: title, image: image)
 
 			Spacer()
 

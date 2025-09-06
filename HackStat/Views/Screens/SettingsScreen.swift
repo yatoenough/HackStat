@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-	@State private var useSameUsername = false
+	@AppStorage(Strings.useSameUsernameKey) private var useSameUsername = false
 	
-	@AppStorage("universalUsername") private var username = ""
+	@AppStorage(Strings.universalUsernameKey) private var username = ""
 	
-	@AppStorage("githubUsername") private var githubUsername = ""
-	@AppStorage("gitlabUsername") private var gitlabUsername = ""
-	@AppStorage("codewarsUsername") private var codewarsUsername = ""
-	@AppStorage("leetcodeUsername") private var leetcodeUsername = ""
+	@AppStorage(Strings.githubUsernameKey) private var githubUsername = ""
+	@AppStorage(Strings.gitlabUsernameKey) private var gitlabUsername = ""
+	@AppStorage(Strings.codewarsUsernameKey) private var codewarsUsername = ""
+	@AppStorage(Strings.leetcodeUsernameKey) private var leetcodeUsername = ""
 	
     var body: some View {
 		NavigationStack {
@@ -26,10 +26,18 @@ struct SettingsScreen: View {
 						.bold()
 					
 					Toggle("Use same username for all platforms", isOn: $useSameUsername)
+						.onChange(of: useSameUsername) { _, newValue in
+							if newValue == true {
+								setUniversalUsername(username)
+							}
+						}
 					
 					if useSameUsername {
 						PlatformUsernameField(title: "Universal", image: Image(systemName: "globe"), username: $username)
 							.transition(.opacity)
+							.onSubmit {
+								setUniversalUsername(username)
+							}
 					}
 					
 					VStack {
@@ -49,6 +57,13 @@ struct SettingsScreen: View {
 			.navigationTitle("Settings")
 		}
     }
+	
+	func setUniversalUsername(_ username: String) {
+		githubUsername = username
+		gitlabUsername = username
+		codewarsUsername = username
+		leetcodeUsername = username
+	}
 }
 
 #Preview {

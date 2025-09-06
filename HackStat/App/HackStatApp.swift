@@ -24,8 +24,10 @@ struct HackStatApp: App {
 	
     var body: some Scene {
         WindowGroup {
-            ContentView()
-				.environment(submissionsViewModel)
+			NavigationStack {
+				SubmissionsScreen()
+					.environment(submissionsViewModel)
+			}
         }
     }
 }

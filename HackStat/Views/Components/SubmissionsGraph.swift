@@ -25,6 +25,10 @@ struct SubmissionsGraph: View {
         let grouped = Dictionary(grouping: submissions, by: { calendar.startOfDay(for: $0.date) })
         return grouped.mapValues { $0.reduce(0) { $0 + $1.submissionsCount } }
     }
+	
+	private var submissionsCount: Int {
+		submissions.reduce(0) { $0 + $1.submissionsCount }
+	}
     
     private var dateCells: [Date] {
         let today = Date()
@@ -47,8 +51,12 @@ struct SubmissionsGraph: View {
         let dates = dateCells
         let today = calendar.startOfDay(for: Date())
 
-        ScrollView(.horizontal, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 5) {
+		VStack(alignment: .leading, spacing: 5) {
+			Text("\(submissions.count) submissions in last year")
+				.bold()
+				.padding(.vertical)
+			
+			ScrollView(.horizontal) {
 				HStack(alignment: .top, spacing: cellSpacing) {
 					ForEach(0..<weeksToShow, id: \.self) { week in
 						VStack(spacing: cellSpacing) {
@@ -59,7 +67,7 @@ struct SubmissionsGraph: View {
 									let count = submissionsByDate[calendar.startOfDay(for: date)] ?? 0
 									
 									Rectangle()
-										.fill(date > today ? Color.gray.opacity(0.15) : colorFor(count: count))
+										.fill(date > today ? Color.clear : colorFor(count: count))
 										.frame(width: cellSize, height: cellSize)
 										.cornerRadius(3)
 								}
@@ -67,10 +75,9 @@ struct SubmissionsGraph: View {
 						}
 					}
 				}
-            }
-            .padding()
-        }
-    }
+			}
+		}
+	}
 
     private func colorFor(count: Int) -> Color {
         switch count {

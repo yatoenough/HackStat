@@ -6,6 +6,15 @@
 //
 
 struct Strings {
+	// MARK: - AppStorage Keys
+	static let useSameUsernameKey = "useSameUsername"
+	static let universalUsernameKey = "universalUsername"
+	
+	static let githubUsernameKey = "githubUsername"
+	static let gitlabUsernameKey = "gitlabUsername"
+	static let codewarsUsernameKey = "codewarsUsername"
+	static let leetcodeUsernameKey = "leetcodeUsername"
+	
 	// MARK: - API URLs
 	static let leetCodeApiURL = "https://leetcode.com/graphql"
 	static let gitHubApiURL = "https://api.github.com/graphql"

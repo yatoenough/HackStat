@@ -27,8 +27,15 @@ struct SubmissionsScreen: View {
 			}
 			.padding([.leading, .top])
 			
-			SubmissionsGraph(submissions: submissionsViewModel.submissions)
-				.padding(.horizontal)
+			if submissionsViewModel.submissions.isEmpty {
+				ProgressView()
+					.progressViewStyle(.circular)
+					.transition(.scale)
+			} else {
+				SubmissionsGraph(submissions: submissionsViewModel.submissions)
+					.padding(.horizontal)
+					.transition(.scale)
+			}
 		}
 		.navigationTitle("HackStat")
 		.task {

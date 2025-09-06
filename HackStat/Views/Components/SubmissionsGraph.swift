@@ -49,7 +49,8 @@ struct SubmissionsGraph: View {
 
     var body: some View {
         let dates = dateCells
-        let today = calendar.startOfDay(for: Date())
+		let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
+		let endOfToday = calendar.startOfDay(for: tomorrow)
 
 		VStack(alignment: .leading, spacing: 5) {
 			Text("\(submissionsCount) submissions in the last year")
@@ -67,7 +68,7 @@ struct SubmissionsGraph: View {
 									let count = submissionsByDate[calendar.startOfDay(for: date)] ?? 0
 									
 									Rectangle()
-										.fill(date > today ? Color.clear : colorFor(count: count))
+										.fill(date > endOfToday ? Color.clear : colorFor(count: count))
 										.frame(width: cellSize, height: cellSize)
 										.cornerRadius(3)
 								}

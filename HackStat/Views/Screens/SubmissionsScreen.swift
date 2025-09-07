@@ -9,14 +9,7 @@ import SwiftUI
 
 struct SubmissionsScreen: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
-	
-	@AppStorage(Strings.useSameUsernameKey) private var useSameUsername = false
-	@AppStorage(Strings.universalUsernameKey) private var username = ""
-	
-	@AppStorage(Strings.githubUsernameKey) private var githubUsername = ""
-	@AppStorage(Strings.gitlabUsernameKey) private var gitlabUsername = ""
-	@AppStorage(Strings.codewarsUsernameKey) private var codewarsUsername = ""
-	@AppStorage(Strings.leetcodeUsernameKey) private var leetcodeUsername = ""
+	@EnvironmentObject private var settingsViewModel: SettingsViewModel
 
 	var body: some View {
 		NavigationStack {
@@ -27,10 +20,10 @@ struct SubmissionsScreen: View {
 							.bold()
 						
 						VStack(alignment: .leading) {
-							PlatformUsernameLabel(title: githubUsername, image: Image(.github))
-							PlatformUsernameLabel(title: gitlabUsername, image: Image(.gitlab))
-							PlatformUsernameLabel(title: codewarsUsername, image: Image(.codewars))
-							PlatformUsernameLabel(title: leetcodeUsername, image: Image(.leetcode))
+							PlatformUsernameLabel(title: settingsViewModel.githubUsername, image: Image(.github))
+							PlatformUsernameLabel(title: settingsViewModel.gitlabUsername, image: Image(.gitlab))
+							PlatformUsernameLabel(title: settingsViewModel.codewarsUsername, image: Image(.codewars))
+							PlatformUsernameLabel(title: settingsViewModel.leetcodeUsername, image: Image(.leetcode))
 						}
 					}
 					.padding([.leading, .top])
@@ -50,14 +43,14 @@ struct SubmissionsScreen: View {
 	}
 	
 	private func fetchSubmissions() async {
-		if useSameUsername {
-			await submissionsViewModel.fetchSubmissions(for: username)
+		if settingsViewModel.useSameUsername {
+			await submissionsViewModel.fetchSubmissions(for: settingsViewModel.username)
 		} else {
 			let usernames = Usernames(
-				github: githubUsername,
-				gitlab: gitlabUsername,
-				codewars: codewarsUsername,
-				leetcode: leetcodeUsername
+				github: settingsViewModel.githubUsername,
+				gitlab: settingsViewModel.gitlabUsername,
+				codewars: settingsViewModel.codewarsUsername,
+				leetcode: settingsViewModel.leetcodeUsername
 			)
 			await submissionsViewModel.fetchSubmissions(for: usernames)
 		}
@@ -67,5 +60,6 @@ struct SubmissionsScreen: View {
 #Preview {
 	SubmissionsScreen()
 		.environment(SubmissionsViewModel.previewInstance)
+		.environmentObject(SettingsViewModel())
 	
 }

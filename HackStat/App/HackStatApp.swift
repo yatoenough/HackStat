@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct HackStatApp: App {
 	let submissionsViewModel: SubmissionsViewModel
+	let settingsViewModel: SettingsViewModel
 	
 	init() {
 		let providers: [SubmissionsProvider] = [
@@ -20,12 +21,14 @@ struct HackStatApp: App {
 	   ]
 		
 		submissionsViewModel = SubmissionsViewModel(providers: providers)
+		settingsViewModel = SettingsViewModel()
 	}
 	
     var body: some Scene {
         WindowGroup {
 			RootView()
 				.environment(submissionsViewModel)
+				.environmentObject(settingsViewModel)
         }
     }
 }

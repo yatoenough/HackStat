@@ -26,4 +26,5 @@ struct RootView: View {
 #Preview {
     RootView()
 		.environment(SubmissionsViewModel.previewInstance)
+		.environmentObject(SettingsViewModel())
 }

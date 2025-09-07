@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct Submission: Identifiable, Equatable {
-	let id = UUID()
+struct Submission: Equatable {
 	var date: Date
 	var submissionsCount: Int
 	

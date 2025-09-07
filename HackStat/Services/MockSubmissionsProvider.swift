@@ -8,6 +8,7 @@
 import Foundation
 
 struct MockSubmissionsProvider: SubmissionsProvider {
+	let platformType: PlatformType = .github
 	private let returnsError: Bool
 	
 	init(returnsError: Bool = false) {

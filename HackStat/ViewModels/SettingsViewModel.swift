@@ -22,4 +22,22 @@ class SettingsViewModel: ObservableObject {
 		codewarsUsername = username
 		leetcodeUsername = username
 	}
+	
+	func resolveUsernames() -> Usernames {
+		if useSameUsername {
+			return Usernames(
+				github: username,
+				gitlab: username,
+				codewars: username,
+				leetcode: username
+			)
+		} else {
+			return Usernames(
+				github: githubUsername,
+				gitlab: gitlabUsername,
+				codewars: codewarsUsername,
+				leetcode: leetcodeUsername
+			)
+		}
+	}
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-	@EnvironmentObject var settingsViewModel: SettingsViewModel
+	@EnvironmentObject private var settingsViewModel: SettingsViewModel
 	
     var body: some View {
 		NavigationStack {

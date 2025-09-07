@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SubmissionsScreen: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
-	@EnvironmentObject private var settingsViewModel: SettingsViewModel
+	@Environment(SettingsViewModel.self) private var settingsViewModel
 
 	var body: some View {
 		NavigationStack {
@@ -92,5 +92,5 @@ struct SubmissionsScreen: View {
 #Preview {
 	SubmissionsScreen()
 		.environment(SubmissionsViewModel.previewInstance)
-		.environmentObject(SettingsViewModel())
+		.environment(SettingsViewModel())
 }

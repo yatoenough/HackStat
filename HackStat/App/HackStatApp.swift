@@ -28,7 +28,7 @@ struct HackStatApp: App {
         WindowGroup {
 			RootView()
 				.environment(submissionsViewModel)
-				.environmentObject(settingsViewModel)
+				.environment(settingsViewModel)
         }
     }
 }

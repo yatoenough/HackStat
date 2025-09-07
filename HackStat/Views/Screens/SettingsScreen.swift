@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-	@EnvironmentObject private var settingsViewModel: SettingsViewModel
+	@Environment(SettingsViewModel.self) private var settingsViewModel
 	
     var body: some View {
+		@Bindable var settingsViewModel = settingsViewModel
+		
 		NavigationStack {
 			ScrollView {
 				VStack(alignment: .leading) {
@@ -21,15 +23,15 @@ struct SettingsScreen: View {
 					Toggle("Use same username for all platforms", isOn: $settingsViewModel.useSameUsername)
 						.onChange(of: settingsViewModel.useSameUsername) { _, newValue in
 							if newValue == true {
-								settingsViewModel.setUniversalUsername(settingsViewModel.username)
+								settingsViewModel.setUniversalUsername(settingsViewModel.universalUsername)
 							}
 						}
 					
 					if settingsViewModel.useSameUsername {
-						PlatformUsernameField(title: "Universal", image: Image(systemName: "globe"), username: $settingsViewModel.username)
+						PlatformUsernameField(title: "Universal", image: Image(systemName: "globe"), username: $settingsViewModel.universalUsername)
 							.transition(.opacity)
 							.onSubmit {
-								settingsViewModel.setUniversalUsername(settingsViewModel.username)
+								settingsViewModel.setUniversalUsername(settingsViewModel.universalUsername)
 							}
 					}
 					
@@ -56,5 +58,5 @@ struct SettingsScreen: View {
 
 #Preview {
 	SettingsScreen()
-		.environmentObject(SettingsViewModel())
+		.environment(SettingsViewModel())
 }

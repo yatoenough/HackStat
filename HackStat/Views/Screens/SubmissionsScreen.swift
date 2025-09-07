@@ -22,19 +22,23 @@ struct SubmissionsScreen: View {
 						VStack(alignment: .leading) {
 							PlatformUsernameLabel(
 								title: settingsViewModel.githubUsername,
-								image: Image(.github)
+								image: Image(.github),
+								status: submissionsViewModel.platformStates.github
 							)
 							PlatformUsernameLabel(
 								title: settingsViewModel.gitlabUsername,
-								image: Image(.gitlab)
+								image: Image(.gitlab),
+								status: submissionsViewModel.platformStates.gitlab
 							)
 							PlatformUsernameLabel(
 								title: settingsViewModel.codewarsUsername,
-								image: Image(.codewars)
+								image: Image(.codewars),
+								status: submissionsViewModel.platformStates.codewars
 							)
 							PlatformUsernameLabel(
 								title: settingsViewModel.leetcodeUsername,
-								image: Image(.leetcode)
+								image: Image(.leetcode),
+								status: submissionsViewModel.platformStates.leetcode
 							)
 						}
 					}

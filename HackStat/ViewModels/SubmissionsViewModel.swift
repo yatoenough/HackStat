@@ -12,6 +12,7 @@ import Foundation
 class SubmissionsViewModel {
 	private(set) var submissions = [Submission]()
 	private(set) var loadingState = LoadingState.idle
+	private(set) var platformStates = PlatformLoadingState()
 
 	private let providers: [SubmissionsProvider]
 
@@ -21,8 +22,25 @@ class SubmissionsViewModel {
 
 	func fetchSubmissions(for usernames: Usernames) async {
 		loadingState = .loading
+
+		for provider in providers {
+			let username: String?
+			switch provider.platformType {
+			case .github:
+				username = usernames.github
+			case .gitlab:
+				username = usernames.gitlab
+			case .codewars:
+				username = usernames.codewars
+			case .leetcode:
+				username = usernames.leetcode
+			}
+			
+			let status: PlatformStatus = (username?.isEmpty != false) ? .skipped : .loading
+			platformStates.setStatus(for: provider.platformType, status: status)
+		}
 		
-		await withTaskGroup(of: (submissions: [Submission], hasError: Bool).self) { group in
+		await withTaskGroup(of: (platform: PlatformType, submissions: [Submission], hasError: Bool).self) { group in
 			var allResults = [Submission]()
 			var hasAnyErrors = false
 
@@ -42,23 +60,36 @@ class SubmissionsViewModel {
 					}
 
 					guard let username, !username.isEmpty else {
-						return (submissions: [], hasError: false)
+						return (platform: await provider.platformType, submissions: [], hasError: false)
 					}
 
 					let result = await provider.getSubmissions(for: username)
 
 					switch result {
 					case .success(let fetchedSubmissions):
-						return (submissions: fetchedSubmissions, hasError: false)
+						return (platform: await provider.platformType, submissions: fetchedSubmissions, hasError: false)
 					case .failure(let error):
 						print("Error fetching submissions for \(await provider.platformType): \(error)")
-						return (submissions: [], hasError: true)
+						return (platform: await provider.platformType, submissions: [], hasError: true)
 					}
 				}
 			}
 
 			for await result in group {
 				allResults.append(contentsOf: result.submissions)
+				
+				let currentStatus = platformStates.getStatus(for: result.platform)
+				let finalStatus: PlatformStatus
+				
+				switch currentStatus {
+				case .skipped:
+					finalStatus = .skipped
+				default:
+					finalStatus = result.hasError ? .failed : .success
+				}
+				
+				platformStates.setStatus(for: result.platform, status: finalStatus)
+				
 				if result.hasError {
 					hasAnyErrors = true
 				}

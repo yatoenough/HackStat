@@ -14,13 +14,12 @@ struct PlatformStatusIndicator: View {
 		Circle()
 			.fill(statusColor)
 			.frame(width: 8, height: 8)
-			.opacity(shouldShow ? 1 : 0)
 			.animation(.easeInOut(duration: 0.3), value: status)
 	}
 	
 	private var statusColor: Color {
 		switch status {
-		case .idle:
+		case .idle, .skipped:
 			return .gray
 		case .loading:
 			return .blue
@@ -28,17 +27,6 @@ struct PlatformStatusIndicator: View {
 			return .green
 		case .failed:
 			return .red
-		case .skipped:
-			return .gray.opacity(0.3)
-		}
-	}
-	
-	private var shouldShow: Bool {
-		switch status {
-		case .idle, .skipped:
-			return false
-		case .loading, .success, .failed:
-			return true
 		}
 	}
 }

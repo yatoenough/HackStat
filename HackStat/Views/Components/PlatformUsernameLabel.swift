@@ -21,7 +21,7 @@ struct PlatformUsernameLabel: View {
 	
 	var body: some View {
 		Label {
-			Text(title)
+			Text(title.isEmpty ? "Username was not provided" : title)
 		} icon: {
 			ZStack(alignment: .topTrailing) {
 				image

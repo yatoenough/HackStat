@@ -14,10 +14,10 @@ enum PlatformStatus {
 }
 
 struct PlatformLoadingState {
-	var github: PlatformStatus = .idle
-	var gitlab: PlatformStatus = .idle
-	var codewars: PlatformStatus = .idle
-	var leetcode: PlatformStatus = .idle
+	private(set) var github: PlatformStatus = .idle
+	private(set) var gitlab: PlatformStatus = .idle
+	private(set) var codewars: PlatformStatus = .idle
+	private(set) var leetcode: PlatformStatus = .idle
 	
 	mutating func setStatus(for platform: PlatformType, status: PlatformStatus) {
 		switch platform {

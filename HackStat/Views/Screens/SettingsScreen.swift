@@ -43,9 +43,11 @@ struct SettingsScreen: View {
 					.disabled(settingsViewModel.useSameUsername)
 					.padding(.vertical)
 				}
+				.textInputAutocapitalization(.never)
 				.animation(.easeInOut, value: settingsViewModel.useSameUsername)
 				.padding()
 			}
+			.scrollDismissesKeyboard(.immediately)
 			.textFieldStyle(.roundedBorder)
 			.navigationTitle("Settings")
 		}

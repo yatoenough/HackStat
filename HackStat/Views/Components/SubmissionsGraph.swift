@@ -59,24 +59,30 @@ struct SubmissionsGraph: View {
 				.bold()
 				.padding(.vertical)
 			
-			ScrollView(.horizontal) {
-				HStack(alignment: .top, spacing: cellSpacing) {
-					ForEach(0..<weeksToShow, id: \.self) { week in
-						VStack(spacing: cellSpacing) {
-							ForEach(0..<daysInWeek, id: \.self) { day in
-								let index = week * daysInWeek + day
-								if index < dates.count {
-									let date = dates[index]
-									let count = submissionsByDate[calendar.startOfDay(for: date)] ?? 0
-									
-									Rectangle()
-										.fill(date > endOfToday ? Color.clear : colorFor(count: count))
-										.frame(width: cellSize, height: cellSize)
-										.cornerRadius(3)
+			ScrollViewReader { proxy in
+				ScrollView(.horizontal) {
+					HStack(alignment: .top, spacing: cellSpacing) {
+						ForEach(0..<weeksToShow, id: \.self) { week in
+							VStack(spacing: cellSpacing) {
+								ForEach(0..<daysInWeek, id: \.self) { day in
+									let index = week * daysInWeek + day
+									if index < dates.count {
+										let date = dates[index]
+										let count = submissionsByDate[calendar.startOfDay(for: date)] ?? 0
+
+										Rectangle()
+											.fill(date > endOfToday ? Color.clear : colorFor(count: count))
+											.frame(width: cellSize, height: cellSize)
+											.cornerRadius(3)
+									}
 								}
 							}
+							.id(week)
 						}
 					}
+				}
+				.onAppear {
+					proxy.scrollTo(weeksToShow - 1, anchor: .trailing)
 				}
 			}
 		}

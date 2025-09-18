@@ -9,13 +9,19 @@ import SwiftUI
 
 struct SubmissionsGraph: View {
     let submissions: [Submission]
+	
+	@Environment(SettingsViewModel.self) private var settingsViewModel
     
     private let weeksToShow = 52
     private let daysInWeek = 7
     private let cellSize: CGFloat = 15
     private let cellSpacing: CGFloat = 4
     
-    private var calendar: Calendar { Calendar.current }
+	private var calendar: Calendar {
+		var calendar = Calendar.current
+		calendar.firstWeekday = settingsViewModel.firstWeekday
+		return calendar
+	}
     
     private var submissionsByDate: [Date: Int] {
         let grouped = Dictionary(grouping: submissions, by: { calendar.startOfDay(for: $0.date) })
@@ -94,4 +100,5 @@ struct SubmissionsGraph: View {
 
 #Preview {
     SubmissionsGraph(submissions: Submission.mockSubmissions)
+		.environment(SettingsViewModel())
 }

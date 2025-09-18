@@ -90,7 +90,6 @@ struct SubmissionsScreen: View {
 					} label: {
 						Image(systemName: "arrow.trianglehead.clockwise")
 					}
-					.buttonStyle(.bordered)
 				}
 			}
 		}

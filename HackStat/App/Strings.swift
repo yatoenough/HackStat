@@ -15,6 +15,8 @@ struct Strings {
 	static let codewarsUsernameKey = "codewarsUsername"
 	static let leetcodeUsernameKey = "leetcodeUsername"
 	
+	static let firstWeekdayKey = "firstWeekday"
+	
 	// MARK: - API URLs
 	static let leetCodeApiURL = "https://leetcode.com/graphql"
 	static let gitHubApiURL = "https://api.github.com/graphql"

@@ -34,6 +34,10 @@ class SettingsViewModel {
 	var leetcodeUsername: String {
 		didSet { storage.leetcodeUsername = leetcodeUsername }
 	}
+	
+	var firstWeekday: Int {
+		didSet { storage.firstWeekday = firstWeekday }
+	}
 
 	init() {
 		self.useSameUsername = storage.useSameUsername
@@ -42,6 +46,7 @@ class SettingsViewModel {
 		self.gitlabUsername = storage.gitlabUsername
 		self.codewarsUsername = storage.codewarsUsername
 		self.leetcodeUsername = storage.leetcodeUsername
+		self.firstWeekday = storage.firstWeekday
 	}
 
 	func setUniversalUsername(_ username: String) {
@@ -78,5 +83,6 @@ extension SettingsViewModel {
 		@AppStorage(Strings.gitlabUsernameKey) var gitlabUsername = ""
 		@AppStorage(Strings.codewarsUsernameKey) var codewarsUsername = ""
 		@AppStorage(Strings.leetcodeUsernameKey) var leetcodeUsername = ""
+		@AppStorage(Strings.firstWeekdayKey) var firstWeekday = 1
 	}
 }

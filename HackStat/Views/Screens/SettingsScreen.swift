@@ -16,6 +16,24 @@ struct SettingsScreen: View {
 		NavigationStack {
 			ScrollView {
 				VStack(alignment: .leading) {
+					Text("General")
+						.font(.title2)
+						.bold()
+					
+					HStack {
+						Text("First weekday")
+						
+						Picker("First weekday", selection: $settingsViewModel.firstWeekday) {
+							Text("Sunday")
+								.tag(1)
+							
+							Text("Monday")
+								.tag(2)
+						}
+						.pickerStyle(.palette)
+					}
+					.padding(.vertical)
+					
 					Text("Platform usernames")
 						.font(.title2)
 						.bold()

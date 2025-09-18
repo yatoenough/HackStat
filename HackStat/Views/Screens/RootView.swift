@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RootView: View {
+	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
+	@Environment(SettingsViewModel.self) private var settingsViewModel
+	
     var body: some View {
 		TabView {
 			SubmissionsScreen()
@@ -20,7 +23,15 @@ struct RootView: View {
 					Label("Settings", systemImage: "gear")
 				}
 		}
+		.task {
+			await fetchSubmissions()
+		}
     }
+	
+	private func fetchSubmissions() async {
+		let usernames = settingsViewModel.resolveUsernames()
+		await submissionsViewModel.fetchSubmissions(for: usernames)
+	}
 }
 
 #Preview {

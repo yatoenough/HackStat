@@ -15,11 +15,7 @@ struct SubmissionsGraph: View {
     private let cellSize: CGFloat = 15
     private let cellSpacing: CGFloat = 4
     
-    private var calendar: Calendar {
-        var cal = Calendar.current
-        cal.firstWeekday = 1
-        return cal
-    }
+    private var calendar: Calendar { Calendar.current }
     
     private var submissionsByDate: [Date: Int] {
         let grouped = Dictionary(grouping: submissions, by: { calendar.startOfDay(for: $0.date) })

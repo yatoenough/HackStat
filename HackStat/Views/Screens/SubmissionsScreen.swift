@@ -81,8 +81,17 @@ struct SubmissionsScreen: View {
 				}
 			}
 			.navigationTitle("HackStat")
-			.task {
-				await fetchSubmissions()
+			.toolbar {
+				ToolbarItem(placement: .confirmationAction) {
+					Button {
+						Task {
+							await fetchSubmissions()
+						}
+					} label: {
+						Image(systemName: "arrow.trianglehead.clockwise")
+					}
+					.buttonStyle(.bordered)
+				}
 			}
 		}
 	}

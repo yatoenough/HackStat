@@ -24,7 +24,8 @@ class SubmissionsViewModel {
 		loadingState = .loading
 
 		for provider in providers {
-			let username: String?
+			let username: String
+			
 			switch provider.platformType {
 			case .github:
 				username = usernames.github
@@ -36,7 +37,7 @@ class SubmissionsViewModel {
 				username = usernames.leetcode
 			}
 			
-			let status: PlatformStatus = (username?.isEmpty != false) ? .skipped : .loading
+			let status: PlatformStatus = (username.isEmpty != false) ? .skipped : .loading
 			platformStates.setStatus(for: provider.platformType, status: status)
 		}
 		
@@ -46,7 +47,7 @@ class SubmissionsViewModel {
 
 			for provider in providers {
 				group.addTask {
-					let username: String?
+					let username: String
 					
 					switch await provider.platformType {
 					case .github:
@@ -59,7 +60,7 @@ class SubmissionsViewModel {
 						username = usernames.leetcode
 					}
 
-					guard let username, !username.isEmpty else {
+					guard !username.isEmpty else {
 						return (platform: await provider.platformType, submissions: [], hasError: false)
 					}
 
@@ -95,9 +96,19 @@ class SubmissionsViewModel {
 				}
 			}
 
-			submissions = allResults.sorted(by: { $0.date > $1.date })
+			submissions = allResults
+				.filter(isSubmissionInLastYear)
+				.sorted { $0.date > $1.date }
+			
 			loadingState = submissions.isEmpty && hasAnyErrors ? .error("Error fetching submissions") : .loaded
 		}
+	}
+	
+	private func isSubmissionInLastYear(_ submission: Submission) -> Bool {
+		let calendar = Calendar.current
+		guard let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: Date()) else { return false }
+		
+		return submission.date >= oneYearAgo
 	}
 
 	#if DEBUG

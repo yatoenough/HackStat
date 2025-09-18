@@ -31,6 +31,12 @@ struct SubmissionsGraph: View {
 	private var submissionsCount: Int {
 		submissions.reduce(0) { $0 + $1.submissionsCount }
 	}
+	
+	private var largestSubmissionsCount: Int {
+		guard let submission = submissions.max(by: { $0.submissionsCount < $1.submissionsCount }) else { return 0 }
+		
+		return submission.submissionsCount
+	}
     
     private var dateCells: [Date] {
         let today = Date()
@@ -89,18 +95,24 @@ struct SubmissionsGraph: View {
 	}
 
     private func colorFor(count: Int) -> Color {
-        switch count {
-        case 0:
-            return Color(.systemGray5)
-        case 1...2:
-            return .accentColor.opacity(0.4)
-        case 3...5:
-            return .accentColor.opacity(0.7)
-        case 6...:
-            return .accentColor
-        default:
-            return .clear
-        }
+		guard count > 0 else {
+			return Color(.systemGray5)
+		}
+
+		let percentage = Double(count) / Double(largestSubmissionsCount)
+
+		switch percentage {
+		case 0..<0.1:
+			return .accentColor.opacity(0.2)
+		case 0.1..<0.3:
+			return .accentColor.opacity(0.4)
+		case 0.3..<0.5:
+			return .accentColor.opacity(0.6)
+		case 0.5..<0.75:
+			return .accentColor.opacity(0.8)
+		default:
+			return .accentColor
+		}
     }
 }
 

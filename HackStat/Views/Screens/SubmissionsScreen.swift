@@ -53,17 +53,25 @@ struct SubmissionsScreen: View {
 				case .loading:
 					ProgressView("Loading submissions...")
 						.frame(maxWidth: .infinity, maxHeight: .infinity)
+						.transition(.opacity.combined(with: .scale(scale: 0.8)))
+						.animation(.easeInOut(duration: 0.3), value: submissionsViewModel.loadingState)
 				case .loaded:
 					SubmissionsGraph(
 						submissions: submissionsViewModel.submissions
 					)
 					.padding(.horizontal)
-					.transition(.scale)
+					.transition(.asymmetric(
+						insertion: .opacity.combined(with: .move(edge: .bottom)),
+						removal: .opacity.combined(with: .scale(scale: 0.9))
+					))
+					.animation(.spring(response: 0.6, dampingFraction: 0.8), value: submissionsViewModel.loadingState)
 				case .error(let message):
 					VStack(spacing: 16) {
 						Image(systemName: "exclamationmark.triangle")
 							.font(.largeTitle)
 							.foregroundColor(.orange)
+							.scaleEffect(1.0)
+							.animation(.spring(response: 0.5, dampingFraction: 0.6).delay(0.1), value: submissionsViewModel.loadingState)
 						Text("Error Loading Data")
 							.font(.headline)
 						Text(message)
@@ -75,12 +83,23 @@ struct SubmissionsScreen: View {
 							}
 						}
 						.buttonStyle(.bordered)
+						.scaleEffect(1.0)
+						.animation(.spring(response: 0.4, dampingFraction: 0.7).delay(0.3), value: submissionsViewModel.loadingState)
 					}
 					.padding()
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
+					.transition(.asymmetric(
+						insertion: .opacity.combined(with: .move(edge: .top)),
+						removal: .opacity.combined(with: .scale(scale: 0.8))
+					))
+					.animation(.easeInOut(duration: 0.4), value: submissionsViewModel.loadingState)
 				}
 			}
+			.animation(.easeInOut(duration: 0.25), value: submissionsViewModel.loadingState)
 			.navigationTitle("HackStat")
+			.onChange(of: settingsViewModel.resolveUsernames()) { _, _ in
+				Task { await fetchSubmissions() }
+			}
 			.toolbar {
 				ToolbarItem(placement: .confirmationAction) {
 					Button {

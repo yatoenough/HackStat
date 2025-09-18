@@ -32,7 +32,7 @@ struct SettingsScreen: View {
 						}
 						.pickerStyle(.palette)
 					}
-					.padding(.vertical)
+					.padding(.bottom)
 					
 					Text("Platform usernames")
 						.font(.title2)

@@ -8,64 +8,73 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-	@AppStorage(Strings.useSameUsernameKey) private var useSameUsername = false
-	
-	@AppStorage(Strings.universalUsernameKey) private var username = ""
-	
-	@AppStorage(Strings.githubUsernameKey) private var githubUsername = ""
-	@AppStorage(Strings.gitlabUsernameKey) private var gitlabUsername = ""
-	@AppStorage(Strings.codewarsUsernameKey) private var codewarsUsername = ""
-	@AppStorage(Strings.leetcodeUsernameKey) private var leetcodeUsername = ""
+	@Environment(SettingsViewModel.self) private var settingsViewModel
 	
     var body: some View {
+		@Bindable var settingsViewModel = settingsViewModel
+		
 		NavigationStack {
 			ScrollView {
 				VStack(alignment: .leading) {
+					Text("General")
+						.font(.title2)
+						.bold()
+					
+					HStack {
+						Text("First weekday")
+						
+						Picker("First weekday", selection: $settingsViewModel.firstWeekday) {
+							Text("Sunday")
+								.tag(1)
+							
+							Text("Monday")
+								.tag(2)
+						}
+						.pickerStyle(.palette)
+					}
+					.padding(.bottom)
+					
 					Text("Platform usernames")
 						.font(.title2)
 						.bold()
 					
-					Toggle("Use same username for all platforms", isOn: $useSameUsername)
-						.onChange(of: useSameUsername) { _, newValue in
+					Toggle("Use same username for all platforms", isOn: $settingsViewModel.useSameUsername)
+						.onChange(of: settingsViewModel.useSameUsername) { _, newValue in
 							if newValue == true {
-								setUniversalUsername(username)
+								settingsViewModel.setUniversalUsername(settingsViewModel.universalUsername)
 							}
 						}
 					
-					if useSameUsername {
-						PlatformUsernameField(title: "Universal", image: Image(systemName: "globe"), username: $username)
+					if settingsViewModel.useSameUsername {
+						PlatformUsernameField(title: "Universal", image: Image(systemName: "globe"), username: $settingsViewModel.universalUsername)
 							.transition(.opacity)
 							.onSubmit {
-								setUniversalUsername(username)
+								settingsViewModel.setUniversalUsername(settingsViewModel.universalUsername)
 							}
 					}
 					
 					VStack {
-						PlatformUsernameField(title: "GitHub", image: Image(.github), username: $githubUsername)
-						PlatformUsernameField(title: "GitLab", image: Image(.gitlab), username: $gitlabUsername)
-						PlatformUsernameField(title: "Codewars", image: Image(.codewars), username: $codewarsUsername)
-						PlatformUsernameField(title: "LeetCode", image: Image(.leetcode), username: $leetcodeUsername)
+						PlatformUsernameField(title: "GitHub", image: Image(.github), username: $settingsViewModel.githubUsername)
+						PlatformUsernameField(title: "GitLab", image: Image(.gitlab), username: $settingsViewModel.gitlabUsername)
+						PlatformUsernameField(title: "Codewars", image: Image(.codewars), username: $settingsViewModel.codewarsUsername)
+						PlatformUsernameField(title: "LeetCode", image: Image(.leetcode), username: $settingsViewModel.leetcodeUsername)
 					}
-					.opacity(useSameUsername ? 0.3 : 1)
-					.disabled(useSameUsername)
+					.opacity(settingsViewModel.useSameUsername ? 0.3 : 1)
+					.disabled(settingsViewModel.useSameUsername)
 					.padding(.vertical)
 				}
-				.animation(.easeInOut, value: useSameUsername)
+				.textInputAutocapitalization(.never)
+				.animation(.easeInOut, value: settingsViewModel.useSameUsername)
 				.padding()
 			}
+			.scrollDismissesKeyboard(.immediately)
 			.textFieldStyle(.roundedBorder)
 			.navigationTitle("Settings")
 		}
     }
-	
-	func setUniversalUsername(_ username: String) {
-		githubUsername = username
-		gitlabUsername = username
-		codewarsUsername = username
-		leetcodeUsername = username
-	}
 }
 
 #Preview {
 	SettingsScreen()
+		.environment(SettingsViewModel())
 }

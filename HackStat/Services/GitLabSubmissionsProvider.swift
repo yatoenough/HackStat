@@ -8,6 +8,7 @@
 import Foundation
 
 struct GitLabSubmissionsProvider: SubmissionsProvider {
+	let platformType: PlatformType = .gitlab
 	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
 		let url = URL(string: "\(Strings.gitLabApiURL)/users/\(username)/calendar.json")!
 		

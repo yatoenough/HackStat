@@ -19,6 +19,7 @@ private struct CodeWarsData: Codable {
 }
 
 struct CodeWarsSubmissionsProvider: SubmissionsProvider {
+	let platformType: PlatformType = .codewars
 	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
 		var submissions: [Submission] = []
 		var currentPage = 0

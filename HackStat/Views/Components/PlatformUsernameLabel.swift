@@ -11,14 +11,28 @@ import SwiftUI
 struct PlatformUsernameLabel: View {
 	let title: String
 	let image: Image
+	let status: PlatformStatus?
+	
+	init(title: String, image: Image, status: PlatformStatus? = nil) {
+		self.title = title
+		self.image = image
+		self.status = status
+	}
 	
 	var body: some View {
 		Label {
-			Text(title)
+			Text(title.isEmpty ? "Username was not provided" : title)
 		} icon: {
-			image
-				.resizable()
-				.frame(width: 25, height: 25)
+			ZStack(alignment: .topTrailing) {
+				image
+					.resizable()
+					.frame(width: 25, height: 25)
+				
+				if let status {
+					PlatformStatusIndicator(status: status)
+						.offset(x: 3, y: -3)
+				}
+			}
 		}
 	}
 }

@@ -9,17 +9,19 @@ import SwiftUI
 
 struct SubmissionsGraph: View {
     let submissions: [Submission]
+	
+	@Environment(SettingsViewModel.self) private var settingsViewModel
     
     private let weeksToShow = 52
     private let daysInWeek = 7
     private let cellSize: CGFloat = 15
     private let cellSpacing: CGFloat = 4
     
-    private var calendar: Calendar {
-        var cal = Calendar.current
-        cal.firstWeekday = 1
-        return cal
-    }
+	private var calendar: Calendar {
+		var calendar = Calendar.current
+		calendar.firstWeekday = settingsViewModel.firstWeekday
+		return calendar
+	}
     
     private var submissionsByDate: [Date: Int] {
         let grouped = Dictionary(grouping: submissions, by: { calendar.startOfDay(for: $0.date) })
@@ -28,6 +30,12 @@ struct SubmissionsGraph: View {
 	
 	private var submissionsCount: Int {
 		submissions.reduce(0) { $0 + $1.submissionsCount }
+	}
+	
+	private var largestSubmissionsCount: Int {
+		guard let submission = submissions.max(by: { $0.submissionsCount < $1.submissionsCount }) else { return 0 }
+		
+		return submission.submissionsCount
 	}
     
     private var dateCells: [Date] {
@@ -57,45 +65,58 @@ struct SubmissionsGraph: View {
 				.bold()
 				.padding(.vertical)
 			
-			ScrollView(.horizontal) {
-				HStack(alignment: .top, spacing: cellSpacing) {
-					ForEach(0..<weeksToShow, id: \.self) { week in
-						VStack(spacing: cellSpacing) {
-							ForEach(0..<daysInWeek, id: \.self) { day in
-								let index = week * daysInWeek + day
-								if index < dates.count {
-									let date = dates[index]
-									let count = submissionsByDate[calendar.startOfDay(for: date)] ?? 0
-									
-									Rectangle()
-										.fill(date > endOfToday ? Color.clear : colorFor(count: count))
-										.frame(width: cellSize, height: cellSize)
-										.cornerRadius(3)
+			ScrollViewReader { proxy in
+				ScrollView(.horizontal) {
+					HStack(alignment: .top, spacing: cellSpacing) {
+						ForEach(0..<weeksToShow, id: \.self) { week in
+							VStack(spacing: cellSpacing) {
+								ForEach(0..<daysInWeek, id: \.self) { day in
+									let index = week * daysInWeek + day
+									if index < dates.count {
+										let date = dates[index]
+										let count = submissionsByDate[calendar.startOfDay(for: date)] ?? 0
+
+										Rectangle()
+											.fill(date > endOfToday ? Color.clear : colorFor(count: count))
+											.frame(width: cellSize, height: cellSize)
+											.cornerRadius(3)
+									}
 								}
 							}
+							.id(week)
 						}
 					}
+				}
+				.onAppear {
+					proxy.scrollTo(weeksToShow - 1, anchor: .trailing)
 				}
 			}
 		}
 	}
 
     private func colorFor(count: Int) -> Color {
-        switch count {
-        case 0:
-            return Color(.systemGray5)
-        case 1...2:
-            return .accentColor.opacity(0.4)
-        case 3...5:
-            return .accentColor.opacity(0.7)
-        case 6...:
-            return .accentColor
-        default:
-            return .clear
-        }
+		guard count > 0 else {
+			return Color(.systemGray5)
+		}
+
+		let percentage = Double(count) / Double(largestSubmissionsCount)
+
+		switch percentage {
+		case 0..<0.1:
+			return .accentColor.opacity(0.2)
+		case 0.1..<0.3:
+			return .accentColor.opacity(0.4)
+		case 0.3..<0.5:
+			return .accentColor.opacity(0.6)
+		case 0.5..<0.75:
+			return .accentColor.opacity(0.8)
+		default:
+			return .accentColor
+		}
     }
 }
 
 #Preview {
     SubmissionsGraph(submissions: Submission.mockSubmissions)
+		.environment(SettingsViewModel())
 }

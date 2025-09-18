@@ -36,6 +36,7 @@ private struct GitHubResponse: Decodable {
 }
 
 struct GitHubSubmissionsProvider: SubmissionsProvider {
+	let platformType: PlatformType = .github
 	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
 		let url = URL(string: Strings.gitHubApiURL)!
 

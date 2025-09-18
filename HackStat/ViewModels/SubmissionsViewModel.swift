@@ -7,9 +7,12 @@
 
 import Foundation
 
+@MainActor
 @Observable
 class SubmissionsViewModel {
 	private(set) var submissions = [Submission]()
+	private(set) var loadingState = LoadingState.idle
+	private(set) var platformStates = PlatformLoadingState()
 
 	private let providers: [SubmissionsProvider]
 
@@ -17,77 +20,95 @@ class SubmissionsViewModel {
 		self.providers = providers
 	}
 
-	func fetchSubmissions(for username: String) async {
-		await withTaskGroup(of: [Submission].self) { group in
-			var results = [Submission]()
+	func fetchSubmissions(for usernames: Usernames) async {
+		loadingState = .loading
+
+		for provider in providers {
+			let username: String
+			
+			switch provider.platformType {
+			case .github:
+				username = usernames.github
+			case .gitlab:
+				username = usernames.gitlab
+			case .codewars:
+				username = usernames.codewars
+			case .leetcode:
+				username = usernames.leetcode
+			}
+			
+			let status: PlatformStatus = (username.isEmpty != false) ? .skipped : .loading
+			platformStates.setStatus(for: provider.platformType, status: status)
+		}
+		
+		await withTaskGroup(of: (platform: PlatformType, submissions: [Submission], hasError: Bool).self) { group in
+			var allResults = [Submission]()
+			var hasAnyErrors = false
 
 			for provider in providers {
 				group.addTask {
+					let username: String
+					
+					switch await provider.platformType {
+					case .github:
+						username = usernames.github
+					case .gitlab:
+						username = usernames.gitlab
+					case .codewars:
+						username = usernames.codewars
+					case .leetcode:
+						username = usernames.leetcode
+					}
+
+					guard !username.isEmpty else {
+						return (platform: await provider.platformType, submissions: [], hasError: false)
+					}
+
 					let result = await provider.getSubmissions(for: username)
 
 					switch result {
 					case .success(let fetchedSubmissions):
-						return fetchedSubmissions
+						return (platform: await provider.platformType, submissions: fetchedSubmissions, hasError: false)
 					case .failure(let error):
-						print("Error fetching submissions for \(type(of: provider)): \(error)")
-						return []
+						print("Error fetching submissions for \(await provider.platformType): \(error)")
+						return (platform: await provider.platformType, submissions: [], hasError: true)
 					}
 				}
 			}
 
 			for await result in group {
-				results.append(contentsOf: result)
+				allResults.append(contentsOf: result.submissions)
+				
+				let currentStatus = platformStates.getStatus(for: result.platform)
+				let finalStatus: PlatformStatus
+				
+				switch currentStatus {
+				case .skipped:
+					finalStatus = .skipped
+				default:
+					finalStatus = result.hasError ? .failed : .success
+				}
+				
+				platformStates.setStatus(for: result.platform, status: finalStatus)
+				
+				if result.hasError {
+					hasAnyErrors = true
+				}
 			}
 
-			submissions = results.sorted(by: { $0.date > $1.date })
+			submissions = allResults
+				.filter(isSubmissionInLastYear)
+				.sorted { $0.date > $1.date }
+			
+			loadingState = submissions.isEmpty && hasAnyErrors ? .error("Error fetching submissions") : .loaded
 		}
 	}
-
-	func fetchSubmissions(for usernames: Usernames) async {
-		await withTaskGroup(of: [Submission].self) { group in
-			var results = [Submission]()
-
-			for provider in providers {
-				group.addTask {
-					let username: String?
-					
-					switch provider {
-					case is GitHubSubmissionsProvider:
-						username = usernames.github
-					case is GitLabSubmissionsProvider:
-						username = usernames.gitlab
-					case is CodeWarsSubmissionsProvider:
-						username = usernames.codewars
-					case is LeetCodeSubmissionsProvider:
-						username = usernames.leetcode
-					default:
-						username = nil
-					}
-
-					guard let username, !username.isEmpty else {
-						return []
-					}
-
-					let result = await provider.getSubmissions(for: username)
-
-					switch result {
-					case .success(let fetchedSubmissions):
-						return fetchedSubmissions
-					case .failure(let error):
-						print(
-							"Error fetching submissions for \(type(of: provider)): \(error)"
-						)
-						return []
-					}
-				}
-			}
-
-			for await result in group {
-				results.append(contentsOf: result)
-			}
-
-			submissions = results.sorted(by: { $0.date > $1.date })
-		}
+	
+	private func isSubmissionInLastYear(_ submission: Submission) -> Bool {
+		let calendar = Calendar.current
+		guard let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: Date()) else { return false }
+		
+		return submission.date >= oneYearAgo
 	}
 
 	#if DEBUG

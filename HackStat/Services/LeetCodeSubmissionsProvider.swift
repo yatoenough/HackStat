@@ -18,6 +18,7 @@ private struct LeetCodeResponse: Decodable {
 }
 
 struct LeetCodeSubmissionsProvider: SubmissionsProvider {
+	let platformType: PlatformType = .leetcode
 	func getSubmissions(for username: String) async -> Result<[Submission], Error> {
 		let url = URL(string: Strings.leetCodeApiURL)!
 

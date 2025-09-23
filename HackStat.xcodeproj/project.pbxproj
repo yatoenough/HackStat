@@ -6,35 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXContainerItemProxy section */
-		7491B0C92E6772410017B0F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7491B0B32E6772400017B0F0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7491B0BA2E6772400017B0F0;
-			remoteInfo = HackStat;
-		};
-/* End PBXContainerItemProxy section */
+/* Begin PBXBuildFile section */
+		74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED672E83210300E2ACC4 /* HackStatModels */; };
+		74ECED712E832A6900E2ACC4 /* HackStatCore in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED702E832A6900E2ACC4 /* HackStatCore */; };
+		74ECED842E83365F00E2ACC4 /* HackStatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED832E83365F00E2ACC4 /* HackStatUI */; };
+		74ECEDAE2E833A8500E2ACC4 /* HackStatNetworkUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECEDAD2E833A8500E2ACC4 /* HackStatNetworkUtils */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7491B0BB2E6772400017B0F0 /* HackStat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackStat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7491B0C82E6772410017B0F0 /* HackStatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HackStatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		7491B0E82E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStat" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Tests/SubmissionsViewModelTests.swift,
+				Packages/HackStatCore,
+				Packages/HackStatModels,
+				Packages/HackStatNetworkUtils,
+				Packages/HackStatUI,
 			);
 			target = 7491B0BA2E6772400017B0F0 /* HackStat */;
-		};
-		7491B0E92E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStatTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Tests/SubmissionsViewModelTests.swift,
-			);
-			target = 7491B0C72E6772410017B0F0 /* HackStatTests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -43,7 +35,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				7491B0E82E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStat" target */,
-				7491B0E92E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStatTests" target */,
 			);
 			path = HackStat;
 			sourceTree = "<group>";
@@ -55,13 +46,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7491B0C52E6772410017B0F0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				74ECED712E832A6900E2ACC4 /* HackStatCore in Frameworks */,
+				74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */,
+				74ECED842E83365F00E2ACC4 /* HackStatUI in Frameworks */,
+				74ECEDAE2E833A8500E2ACC4 /* HackStatNetworkUtils in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				7491B0BD2E6772400017B0F0 /* HackStat */,
+				74ECED662E83210300E2ACC4 /* Frameworks */,
 				7491B0BC2E6772400017B0F0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,9 +69,15 @@
 			isa = PBXGroup;
 			children = (
 				7491B0BB2E6772400017B0F0 /* HackStat.app */,
-				7491B0C82E6772410017B0F0 /* HackStatTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		74ECED662E83210300E2ACC4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,30 +100,14 @@
 			);
 			name = HackStat;
 			packageProductDependencies = (
+				74ECED672E83210300E2ACC4 /* HackStatModels */,
+				74ECED702E832A6900E2ACC4 /* HackStatCore */,
+				74ECED832E83365F00E2ACC4 /* HackStatUI */,
+				74ECEDAD2E833A8500E2ACC4 /* HackStatNetworkUtils */,
 			);
 			productName = HackStat;
 			productReference = 7491B0BB2E6772400017B0F0 /* HackStat.app */;
 			productType = "com.apple.product-type.application";
-		};
-		7491B0C72E6772410017B0F0 /* HackStatTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7491B0DF2E6772410017B0F0 /* Build configuration list for PBXNativeTarget "HackStatTests" */;
-			buildPhases = (
-				7491B0C42E6772410017B0F0 /* Sources */,
-				7491B0C52E6772410017B0F0 /* Frameworks */,
-				7491B0C62E6772410017B0F0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7491B0CA2E6772410017B0F0 /* PBXTargetDependency */,
-			);
-			name = HackStatTests;
-			packageProductDependencies = (
-			);
-			productName = HackStatTests;
-			productReference = 7491B0C82E6772410017B0F0 /* HackStatTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -142,10 +121,6 @@
 				TargetAttributes = {
 					7491B0BA2E6772400017B0F0 = {
 						CreatedOnToolsVersion = 26.0;
-					};
-					7491B0C72E6772410017B0F0 = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = 7491B0BA2E6772400017B0F0;
 					};
 				};
 			};
@@ -164,20 +139,12 @@
 			projectRoot = "";
 			targets = (
 				7491B0BA2E6772400017B0F0 /* HackStat */,
-				7491B0C72E6772410017B0F0 /* HackStatTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7491B0B92E6772400017B0F0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7491B0C62E6772410017B0F0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -194,22 +161,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7491B0C42E6772410017B0F0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7491B0CA2E6772410017B0F0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7491B0BA2E6772400017B0F0 /* HackStat */;
-			targetProxy = 7491B0C92E6772410017B0F0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7491B0DA2E6772410017B0F0 /* Debug */ = {
@@ -411,50 +363,6 @@
 			};
 			name = Release;
 		};
-		7491B0E02E6772410017B0F0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B4CWAXWYU2;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yatoenough.HackStatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HackStat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HackStat";
-			};
-			name = Debug;
-		};
-		7491B0E12E6772410017B0F0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B4CWAXWYU2;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yatoenough.HackStatTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HackStat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HackStat";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -476,16 +384,26 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7491B0DF2E6772410017B0F0 /* Build configuration list for PBXNativeTarget "HackStatTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7491B0E02E6772410017B0F0 /* Debug */,
-				7491B0E12E6772410017B0F0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74ECED672E83210300E2ACC4 /* HackStatModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatModels;
+		};
+		74ECED702E832A6900E2ACC4 /* HackStatCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatCore;
+		};
+		74ECED832E83365F00E2ACC4 /* HackStatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatUI;
+		};
+		74ECEDAD2E833A8500E2ACC4 /* HackStatNetworkUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatNetworkUtils;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7491B0B32E6772400017B0F0 /* Project object */;
 }

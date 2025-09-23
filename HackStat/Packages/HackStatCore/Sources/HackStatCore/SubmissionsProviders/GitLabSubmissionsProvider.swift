@@ -1,0 +1,41 @@
+//
+//  GitLabSubmissionsProvider.swift
+//  HackStat
+//
+//  Created by Nikita Shyshkin on 03/09/2025.
+//
+
+import Foundation
+import HackStatModels
+
+public struct GitLabSubmissionsProvider: SubmissionsProvider {
+	public let platformType: PlatformType = .gitlab
+	
+	private let gitLabApiURL: String
+	
+	public init(gitLabApiURL: String) {
+		self.gitLabApiURL = gitLabApiURL
+	}
+	
+	public func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
+		let url = URL(string: "\(gitLabApiURL)/users/\(username)/calendar.json")!
+		
+		do {
+			let (data, _) = try await URLSession.shared.data(from: url)
+			let calendarResponse = try JSONDecoder().decode([String: Int].self, from: data)
+			
+			var submissions = [Submission]()
+			
+			for (date, count) in calendarResponse {
+				let dateFormatter = DateFormatter()
+				dateFormatter.dateFormat = "yyyy-MM-dd"
+				
+				let submissionDate = dateFormatter.date(from: date)!
+				submissions.append(Submission(date: submissionDate, submissionsCount: count))
+			}
+			return .success(submissions)
+		} catch {
+			return .failure(error)
+		}
+	}
+}

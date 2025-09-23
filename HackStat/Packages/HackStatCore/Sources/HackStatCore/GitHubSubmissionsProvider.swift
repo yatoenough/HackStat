@@ -7,6 +7,7 @@
 
 import Foundation
 import HackStatModels
+import HackStatUtils
 
 private struct GitHubResponse: Decodable {
 	struct Week: Decodable {
@@ -36,19 +37,30 @@ private struct GitHubResponse: Decodable {
 	}
 }
 
-struct GitHubSubmissionsProvider: SubmissionsProvider {
-	let platformType: PlatformType = .github
-	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
-		let url = URL(string: Strings.gitHubApiURL)!
+public struct GitHubSubmissionsProvider: SubmissionsProvider {
+	public let platformType: PlatformType = .github
+	
+	private let gitHubApiURL: String
+	private let gitHubGraphQLQuery: String
+	private let gitHubApiToken: String
+	
+	public init(gitHubApiURL: String, gitHubGraphQLQuery: String, gitHubApiToken: String) {
+		self.gitHubApiURL = gitHubApiURL
+		self.gitHubGraphQLQuery = gitHubGraphQLQuery
+		self.gitHubApiToken = gitHubApiToken
+	}
+	
+	public func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
+		let url = URL(string: gitHubApiURL)!
 
 		let graphQLRequest = GraphQLRequest(
 			url: url,
-			query: Strings.gitHubGraphQLQuery,
+			query: gitHubGraphQLQuery,
 			variables: ["username": username]
 		)
 		
 		var request = graphQLRequest.request
-		request.setValue("Bearer \(Credentials.gitHubApiToken)", forHTTPHeaderField: "Authorization")
+		request.setValue("Bearer \(gitHubApiToken)", forHTTPHeaderField: "Authorization")
 
 		do {
 			let (data, _) = try await URLSession.shared.data(for: request)

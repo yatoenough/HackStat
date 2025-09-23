@@ -8,20 +8,21 @@
 import Foundation
 import HackStatModels
 
-struct MockSubmissionsProvider: SubmissionsProvider {
-	let platformType: PlatformType = .github
+public struct MockSubmissionsProvider: SubmissionsProvider {
+	public let platformType: PlatformType = .github
+	
 	private let returnsError: Bool
 	
-	init(returnsError: Bool = false) {
+	public init(returnsError: Bool = false) {
 		self.returnsError = returnsError
 	}
 	
-	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
+	public func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
 		if returnsError {
 			struct MockError: Error {}
 			return .failure(MockError())
 		}
-		return .success(Submission.mockSubmissions)
+		return await .success(Submission.mockSubmissions)
 	}
 	
 }

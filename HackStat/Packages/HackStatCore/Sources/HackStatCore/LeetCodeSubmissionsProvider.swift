@@ -7,6 +7,7 @@
 
 import Foundation
 import HackStatModels
+import HackStatUtils
 
 private struct LeetCodeResponse: Decodable {
 	struct DataResponse: Decodable {
@@ -18,14 +19,23 @@ private struct LeetCodeResponse: Decodable {
 	let data: DataResponse
 }
 
-struct LeetCodeSubmissionsProvider: SubmissionsProvider {
-	let platformType: PlatformType = .leetcode
-	func getSubmissions(for username: String) async -> Result<[Submission], Error> {
-		let url = URL(string: Strings.leetCodeApiURL)!
+public struct LeetCodeSubmissionsProvider: SubmissionsProvider {
+	public let platformType: PlatformType = .leetcode
+	
+	private let leetCodeApiURL: String
+	private let leetCodeGraphQLQuery: String
+	
+	public init(leetCodeApiURL: String, leetCodeGraphQLQuery: String) {
+		self.leetCodeApiURL = leetCodeApiURL
+		self.leetCodeGraphQLQuery = leetCodeGraphQLQuery
+	}
+	
+	public func getSubmissions(for username: String) async -> Result<[Submission], Error> {
+		let url = URL(string: leetCodeApiURL)!
 
 		let graphQLRequest = GraphQLRequest(
 			url: url,
-			query: Strings.leetCodeGraphQLQuery,
+			query: leetCodeGraphQLQuery,
 			variables: ["username": username]
 		)
 

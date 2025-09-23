@@ -7,6 +7,7 @@
 
 import Foundation
 import HackStatModels
+import HackStatCore
 
 @MainActor
 @Observable
@@ -69,10 +70,10 @@ class SubmissionsViewModel {
 
 					switch result {
 					case .success(let fetchedSubmissions):
-						return (platform: await provider.platformType, submissions: fetchedSubmissions, hasError: false)
+						return (platform: provider.platformType, submissions: fetchedSubmissions, hasError: false)
 					case .failure(let error):
-						print("Error fetching submissions for \(await provider.platformType): \(error)")
-						return (platform: await provider.platformType, submissions: [], hasError: true)
+						print("Error fetching submissions for \(provider.platformType): \(error)")
+						return (platform: provider.platformType, submissions: [], hasError: true)
 					}
 				}
 			}

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED672E83210300E2ACC4 /* HackStatModels */; };
+		74ECED712E832A6900E2ACC4 /* HackStatCore in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED702E832A6900E2ACC4 /* HackStatCore */; };
+		74ECED732E832C1500E2ACC4 /* HackStatUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED722E832C1500E2ACC4 /* HackStatUtils */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +31,9 @@
 		7491B0E82E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStat" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Packages/HackStatCore,
 				Packages/HackStatModels,
+				Packages/HackStatUtils,
 				Tests/SubmissionsViewModelTests.swift,
 			);
 			target = 7491B0BA2E6772400017B0F0 /* HackStat */;
@@ -60,6 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ECED712E832A6900E2ACC4 /* HackStatCore in Frameworks */,
+				74ECED732E832C1500E2ACC4 /* HackStatUtils in Frameworks */,
 				74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +126,8 @@
 			name = HackStat;
 			packageProductDependencies = (
 				74ECED672E83210300E2ACC4 /* HackStatModels */,
+				74ECED702E832A6900E2ACC4 /* HackStatCore */,
+				74ECED722E832C1500E2ACC4 /* HackStatUtils */,
 			);
 			productName = HackStat;
 			productReference = 7491B0BB2E6772400017B0F0 /* HackStat.app */;
@@ -506,6 +514,14 @@
 		74ECED672E83210300E2ACC4 /* HackStatModels */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HackStatModels;
+		};
+		74ECED702E832A6900E2ACC4 /* HackStatCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatCore;
+		};
+		74ECED722E832C1500E2ACC4 /* HackStatUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatUtils;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

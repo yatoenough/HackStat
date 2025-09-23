@@ -8,10 +8,17 @@
 import Foundation
 import HackStatModels
 
-struct GitLabSubmissionsProvider: SubmissionsProvider {
-	let platformType: PlatformType = .gitlab
-	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
-		let url = URL(string: "\(Strings.gitLabApiURL)/users/\(username)/calendar.json")!
+public struct GitLabSubmissionsProvider: SubmissionsProvider {
+	public let platformType: PlatformType = .gitlab
+	
+	private let gitLabApiURL: String
+	
+	public init(gitLabApiURL: String) {
+		self.gitLabApiURL = gitLabApiURL
+	}
+	
+	public func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
+		let url = URL(string: "\(gitLabApiURL)/users/\(username)/calendar.json")!
 		
 		do {
 			let (data, _) = try await URLSession.shared.data(from: url)

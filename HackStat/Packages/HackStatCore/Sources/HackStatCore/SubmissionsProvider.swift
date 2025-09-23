@@ -7,7 +7,7 @@
 
 import HackStatModels
 
-protocol SubmissionsProvider: Sendable {
+public protocol SubmissionsProvider: Sendable {
 	var platformType: PlatformType { get }
 	func getSubmissions(for username: String) async -> Result<[Submission], Error>
 }

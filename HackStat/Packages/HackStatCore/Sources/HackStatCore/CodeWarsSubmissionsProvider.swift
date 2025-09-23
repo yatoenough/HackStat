@@ -19,9 +19,16 @@ private struct CodeWarsData: Codable {
 	let completedLanguages: [String]
 }
 
-struct CodeWarsSubmissionsProvider: SubmissionsProvider {
-	let platformType: PlatformType = .codewars
-	func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
+public struct CodeWarsSubmissionsProvider: SubmissionsProvider {
+	public let platformType: PlatformType = .codewars
+	
+	private let codeWarsApiURL: String
+	
+	public init(codeWarsApiURL: String) {
+		self.codeWarsApiURL = codeWarsApiURL
+	}
+	
+	public func getSubmissions(for username: String) async -> Result<[Submission], any Error> {
 		var submissions: [Submission] = []
 		var currentPage = 0
 		var totalPages = 1
@@ -60,7 +67,7 @@ struct CodeWarsSubmissionsProvider: SubmissionsProvider {
 	private func buildURL(page: Int, username: String) -> URL {
 		return URL(
 			string:
-				"\(Strings.codeWarsApiURL)/users/\(username)/code-challenges/completed?page=\(page)"
+				"\(codeWarsApiURL)/users/\(username)/code-challenges/completed?page=\(page)"
 		)!
 	}
 }

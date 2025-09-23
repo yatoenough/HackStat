@@ -5,19 +5,20 @@
 //  Created by Nikita Shyshkin on 06/09/2025.
 //
 
+import HackStatCore
 import SwiftUI
 
 struct RootView: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
 	@Environment(SettingsViewModel.self) private var settingsViewModel
-	
-    var body: some View {
+
+	var body: some View {
 		TabView {
 			SubmissionsScreen()
 				.tabItem {
 					Label("Submissions", systemImage: "arrow.up.arrow.down")
 				}
-			
+
 			SettingsScreen()
 				.tabItem {
 					Label("Settings", systemImage: "gear")
@@ -26,8 +27,8 @@ struct RootView: View {
 		.task {
 			await fetchSubmissions()
 		}
-    }
-	
+	}
+
 	private func fetchSubmissions() async {
 		let usernames = settingsViewModel.resolveUsernames()
 		await submissionsViewModel.fetchSubmissions(for: usernames)
@@ -35,7 +36,7 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView()
+	RootView()
 		.environment(SubmissionsViewModel.previewInstance)
 		.environment(SettingsViewModel())
 }

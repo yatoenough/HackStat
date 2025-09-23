@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HackStatModels
+import HackStatCore
 
 struct SubmissionsGraph: View {
     let submissions: [Submission]

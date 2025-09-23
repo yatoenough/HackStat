@@ -7,6 +7,7 @@
 
 import SwiftUI
 import HackStatModels
+import HackStatCore
 
 struct SubmissionsScreen: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel

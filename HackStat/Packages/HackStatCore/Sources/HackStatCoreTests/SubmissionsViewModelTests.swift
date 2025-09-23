@@ -7,19 +7,24 @@
 
 import Testing
 import Foundation
+import HackStatModels
 
-@testable import HackStat
+@testable import HackStatCore
 
 @MainActor
 @Suite("SubmissionsViewModel Unit Tests")
 struct SubmissionsViewModelTests {
+	
+	private let usernames = Usernames(github: "", gitlab: "", codewars: "", leetcode: "")
 
     @Test
 	func `Success fetching submissions`() async {
 		let instance = SubmissionsViewModel(providers: [MockSubmissionsProvider()])
-		let expected = Submission.mockSubmissions
+		var expected = Submission.mockSubmissions
+
+		expected.sort { $0.date > $1.date }
 		
-		await instance.fetchSubmissions(for: "username")
+		await instance.fetchSubmissions(for: usernames)
 		
 		#expect(instance.submissions == expected)
     }
@@ -29,7 +34,7 @@ struct SubmissionsViewModelTests {
 		let instance = SubmissionsViewModel(providers: [MockSubmissionsProvider(returnsError: true)])
 		let expected = [Submission]()
 		
-		await instance.fetchSubmissions(for: "username")
+		await instance.fetchSubmissions(for: usernames)
 		
 		#expect(instance.submissions == expected)
 	}

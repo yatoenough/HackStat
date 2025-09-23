@@ -7,22 +7,21 @@
 
 import Foundation
 import HackStatModels
-import HackStatCore
 
 @MainActor
 @Observable
-class SubmissionsViewModel {
-	private(set) var submissions = [Submission]()
-	private(set) var loadingState = LoadingState.idle
-	private(set) var platformStates = PlatformLoadingState()
+public class SubmissionsViewModel {
+	private(set) public var submissions = [Submission]()
+	private(set) public var loadingState = LoadingState.idle
+	private(set) public var platformStates = PlatformLoadingState()
 
 	private let providers: [SubmissionsProvider]
 
-	init(providers: [SubmissionsProvider]) {
+	public init(providers: [SubmissionsProvider]) {
 		self.providers = providers
 	}
 
-	func fetchSubmissions(for usernames: Usernames) async {
+	public func fetchSubmissions(for usernames: Usernames) async {
 		loadingState = .loading
 
 		for provider in providers {
@@ -114,7 +113,7 @@ class SubmissionsViewModel {
 	}
 
 	#if DEBUG
-		static let previewInstance: SubmissionsViewModel = {
+	public static let previewInstance: SubmissionsViewModel = {
 			return SubmissionsViewModel(providers: [MockSubmissionsProvider()])
 		}()
 	#endif

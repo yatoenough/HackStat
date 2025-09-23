@@ -6,6 +6,7 @@
 //
 
 import HackStatCore
+import HackStatModels
 import SwiftUI
 
 @main

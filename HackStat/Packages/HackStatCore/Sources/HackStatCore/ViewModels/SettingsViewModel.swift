@@ -9,38 +9,38 @@ import SwiftUI
 import HackStatModels
 
 @Observable
-class SettingsViewModel {
+public class SettingsViewModel {
 	private let storage = Storage()
 
-	var useSameUsername: Bool {
+	public var useSameUsername: Bool {
 		didSet { storage.useSameUsername = useSameUsername }
 	}
 
-	var universalUsername: String {
+	public var universalUsername: String {
 		didSet { storage.universalUsername = universalUsername }
 	}
 
-	var githubUsername: String {
+	public var githubUsername: String {
 		didSet { storage.githubUsername = githubUsername }
 	}
 
-	var gitlabUsername: String {
+	public var gitlabUsername: String {
 		didSet { storage.gitlabUsername = gitlabUsername }
 	}
 
-	var codewarsUsername: String {
+	public var codewarsUsername: String {
 		didSet { storage.codewarsUsername = codewarsUsername }
 	}
 
-	var leetcodeUsername: String {
+	public var leetcodeUsername: String {
 		didSet { storage.leetcodeUsername = leetcodeUsername }
 	}
 	
-	var firstWeekday: Int {
+	public var firstWeekday: Int {
 		didSet { storage.firstWeekday = firstWeekday }
 	}
 
-	init() {
+	public init() {
 		self.useSameUsername = storage.useSameUsername
 		self.universalUsername = storage.universalUsername
 		self.githubUsername = storage.githubUsername
@@ -50,14 +50,14 @@ class SettingsViewModel {
 		self.firstWeekday = storage.firstWeekday
 	}
 
-	func setUniversalUsername(_ username: String) {
+	public func setUniversalUsername(_ username: String) {
 		githubUsername = username
 		gitlabUsername = username
 		codewarsUsername = username
 		leetcodeUsername = username
 	}
 
-	func resolveUsernames() -> Usernames {
+	public func resolveUsernames() -> Usernames {
 		if useSameUsername {
 			return Usernames(
 				github: universalUsername,
@@ -76,7 +76,7 @@ class SettingsViewModel {
 	}
 }
 
-extension SettingsViewModel {
+public extension SettingsViewModel {
 	private class Storage {
 		@AppStorage(Strings.useSameUsernameKey) var useSameUsername = false
 		@AppStorage(Strings.universalUsernameKey) var universalUsername = ""

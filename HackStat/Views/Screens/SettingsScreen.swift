@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HackStatCore
 
 struct SettingsScreen: View {
 	@Environment(SettingsViewModel.self) private var settingsViewModel

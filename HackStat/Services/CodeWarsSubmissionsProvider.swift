@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HackStatModels
 
 private struct CodeWarsResponse: Codable {
 	let totalPages, totalItems: Int

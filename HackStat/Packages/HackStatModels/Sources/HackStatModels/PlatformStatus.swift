@@ -5,7 +5,7 @@
 //  Created by Nikita Shyshkin on 07/09/2025.
 //
 
-enum PlatformStatus {
+public enum PlatformStatus {
 	case idle
 	case loading  
 	case success
@@ -13,13 +13,15 @@ enum PlatformStatus {
 	case skipped
 }
 
-struct PlatformLoadingState {
-	private(set) var github: PlatformStatus = .idle
-	private(set) var gitlab: PlatformStatus = .idle
-	private(set) var codewars: PlatformStatus = .idle
-	private(set) var leetcode: PlatformStatus = .idle
+public struct PlatformLoadingState {
+	private(set) public var github: PlatformStatus = .idle
+	private(set) public var gitlab: PlatformStatus = .idle
+	private(set) public var codewars: PlatformStatus = .idle
+	private(set) public var leetcode: PlatformStatus = .idle
 	
-	mutating func setStatus(for platform: PlatformType, status: PlatformStatus) {
+	public init() {}
+	
+	public mutating func setStatus(for platform: PlatformType, status: PlatformStatus) {
 		switch platform {
 		case .github:
 			github = status
@@ -32,7 +34,7 @@ struct PlatformLoadingState {
 		}
 	}
 	
-	func getStatus(for platform: PlatformType) -> PlatformStatus {
+	public func getStatus(for platform: PlatformType) -> PlatformStatus {
 		switch platform {
 		case .github:
 			return github

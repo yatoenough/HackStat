@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED672E83210300E2ACC4 /* HackStatModels */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7491B0C92E6772410017B0F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -25,6 +29,7 @@
 		7491B0E82E67741A0017B0F0 /* Exceptions for "HackStat" folder in "HackStat" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Packages/HackStatModels,
 				Tests/SubmissionsViewModelTests.swift,
 			);
 			target = 7491B0BA2E6772400017B0F0 /* HackStat */;
@@ -55,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				7491B0BD2E6772400017B0F0 /* HackStat */,
+				74ECED662E83210300E2ACC4 /* Frameworks */,
 				7491B0BC2E6772400017B0F0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,6 +90,13 @@
 				7491B0C82E6772410017B0F0 /* HackStatTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		74ECED662E83210300E2ACC4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,6 +119,7 @@
 			);
 			name = HackStat;
 			packageProductDependencies = (
+				74ECED672E83210300E2ACC4 /* HackStatModels */,
 			);
 			productName = HackStat;
 			productReference = 7491B0BB2E6772400017B0F0 /* HackStat.app */;
@@ -486,6 +501,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74ECED672E83210300E2ACC4 /* HackStatModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatModels;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7491B0B32E6772400017B0F0 /* Project object */;
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HackStatModels
 
 struct GitLabSubmissionsProvider: SubmissionsProvider {
 	let platformType: PlatformType = .gitlab

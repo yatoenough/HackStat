@@ -5,7 +5,7 @@
 //  Created by Nikita Shyshkin on 07/09/2025.
 //
 
-enum PlatformType {
+public enum PlatformType: Sendable {
 	case github
 	case gitlab
 	case codewars

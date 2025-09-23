@@ -5,8 +5,8 @@
 //  Created by Nikita Shyshkin on 06/09/2025.
 //
 
-
 import SwiftUI
+import HackStatModels
 
 struct PlatformUsernameLabel: View {
 	let title: String

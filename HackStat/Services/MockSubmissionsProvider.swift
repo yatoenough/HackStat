@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HackStatModels
 
 struct MockSubmissionsProvider: SubmissionsProvider {
 	let platformType: PlatformType = .github

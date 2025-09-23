@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HackStatModels
 
 private struct GitHubResponse: Decodable {
 	struct Week: Decodable {

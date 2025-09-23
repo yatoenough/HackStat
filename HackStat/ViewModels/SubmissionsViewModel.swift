@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HackStatModels
 
 @MainActor
 @Observable
@@ -44,26 +45,26 @@ class SubmissionsViewModel {
 		await withTaskGroup(of: (platform: PlatformType, submissions: [Submission], hasError: Bool).self) { group in
 			var allResults = [Submission]()
 			var hasAnyErrors = false
-
+			
 			for provider in providers {
+				let username: String
+				
+				switch provider.platformType {
+				case .github:
+					username = usernames.github
+				case .gitlab:
+					username = usernames.gitlab
+				case .codewars:
+					username = usernames.codewars
+				case .leetcode:
+					username = usernames.leetcode
+				}
+				
+				guard !username.isEmpty else {
+					continue
+				}
+				
 				group.addTask {
-					let username: String
-					
-					switch await provider.platformType {
-					case .github:
-						username = usernames.github
-					case .gitlab:
-						username = usernames.gitlab
-					case .codewars:
-						username = usernames.codewars
-					case .leetcode:
-						username = usernames.leetcode
-					}
-
-					guard !username.isEmpty else {
-						return (platform: await provider.platformType, submissions: [], hasError: false)
-					}
-
 					let result = await provider.getSubmissions(for: username)
 
 					switch result {
@@ -117,3 +118,4 @@ class SubmissionsViewModel {
 		}()
 	#endif
 }
+

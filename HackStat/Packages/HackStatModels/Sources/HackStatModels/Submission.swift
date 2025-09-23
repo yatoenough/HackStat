@@ -7,16 +7,21 @@
 
 import Foundation
 
-struct Submission: Equatable {
-	var date: Date
-	var submissionsCount: Int
+public struct Submission: Equatable, Sendable {
+	public var date: Date
+	public var submissionsCount: Int
 	
-	static func == (lhs: Submission, rhs: Submission) -> Bool {
+	public init(date: Date, submissionsCount: Int) {
+		self.date = date
+		self.submissionsCount = submissionsCount
+	}
+	
+	public static func == (lhs: Submission, rhs: Submission) -> Bool {
 		lhs.date == rhs.date && lhs.submissionsCount == rhs.submissionsCount
 	}
 	
 	#if DEBUG
-	static let mockSubmissions: [Submission] = {
+	@MainActor public static let mockSubmissions: [Submission] = {
 		var submissions = [Submission]()
 		let calendar = Calendar.current
 		let today = Date.now

@@ -5,7 +5,7 @@
 //  Created by Nikita Shyshkin on 07/09/2025.
 //
 
-enum LoadingState: Equatable {
+public enum LoadingState: Equatable {
 	case idle
 	case loading
 	case loaded

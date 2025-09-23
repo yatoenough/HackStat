@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HackStatModels
 
 @Observable
 class SettingsViewModel {

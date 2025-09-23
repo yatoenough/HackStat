@@ -13,13 +13,13 @@ let package = Package(
 	],
 	dependencies: [
 		.package(path: "../HackStatModels/"),
-		.package(path: "../HackStatUtils/"),
+		.package(path: "../HackStatNetworkUtils/"),
 	],
 	targets: [
 		.target(
 			name: "HackStatCore",
 			dependencies: [
-				.product(name: "HackStatUtils", package: "HackStatUtils"),
+				.product(name: "HackStatNetworkUtils", package: "HackStatNetworkUtils"),
 				.product(name: "HackStatModels", package: "HackStatModels"),
 			]
 		),

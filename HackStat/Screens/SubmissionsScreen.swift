@@ -9,6 +9,7 @@ import SwiftUI
 import HackStatModels
 import HackStatCore
 import HackStatUI
+import HackStatNetworkUtils
 
 struct SubmissionsScreen: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel

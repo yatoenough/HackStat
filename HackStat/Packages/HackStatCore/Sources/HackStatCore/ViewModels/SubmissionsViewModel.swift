@@ -7,6 +7,7 @@
 
 import Foundation
 import HackStatModels
+import HackStatNetworkUtils
 
 @MainActor
 @Observable

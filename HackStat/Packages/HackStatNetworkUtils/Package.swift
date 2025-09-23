@@ -3,17 +3,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "HackStatUtils",
+    name: "HackStatNetworkUtils",
 	platforms: [.iOS(.v18)],
     products: [
         .library(
-            name: "HackStatUtils",
-            targets: ["HackStatUtils"]
+            name: "HackStatNetworkUtils",
+            targets: ["HackStatNetworkUtils"]
         ),
     ],
     targets: [
         .target(
-            name: "HackStatUtils"
+            name: "HackStatNetworkUtils"
         ),
 
     ]

@@ -7,7 +7,7 @@
 
 import Foundation
 import HackStatModels
-import HackStatUtils
+import HackStatNetworkUtils
 
 private struct LeetCodeResponse: Decodable {
 	struct DataResponse: Decodable {

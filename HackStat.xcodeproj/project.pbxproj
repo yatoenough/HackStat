@@ -10,6 +10,7 @@
 		74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED672E83210300E2ACC4 /* HackStatModels */; };
 		74ECED712E832A6900E2ACC4 /* HackStatCore in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED702E832A6900E2ACC4 /* HackStatCore */; };
 		74ECED732E832C1500E2ACC4 /* HackStatUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED722E832C1500E2ACC4 /* HackStatUtils */; };
+		74ECED842E83365F00E2ACC4 /* HackStatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 74ECED832E83365F00E2ACC4 /* HackStatUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 			membershipExceptions = (
 				Packages/HackStatCore,
 				Packages/HackStatModels,
+				Packages/HackStatUI,
 				Packages/HackStatUtils,
 			);
 			target = 7491B0BA2E6772400017B0F0 /* HackStat */;
@@ -47,6 +49,7 @@
 				74ECED712E832A6900E2ACC4 /* HackStatCore in Frameworks */,
 				74ECED732E832C1500E2ACC4 /* HackStatUtils in Frameworks */,
 				74ECED682E83210300E2ACC4 /* HackStatModels in Frameworks */,
+				74ECED842E83365F00E2ACC4 /* HackStatUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +103,7 @@
 				74ECED672E83210300E2ACC4 /* HackStatModels */,
 				74ECED702E832A6900E2ACC4 /* HackStatCore */,
 				74ECED722E832C1500E2ACC4 /* HackStatUtils */,
+				74ECED832E83365F00E2ACC4 /* HackStatUI */,
 			);
 			productName = HackStat;
 			productReference = 7491B0BB2E6772400017B0F0 /* HackStat.app */;
@@ -394,6 +398,10 @@
 		74ECED722E832C1500E2ACC4 /* HackStatUtils */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HackStatUtils;
+		};
+		74ECED832E83365F00E2ACC4 /* HackStatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackStatUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

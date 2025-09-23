@@ -9,10 +9,14 @@ import SwiftUI
 import HackStatModels
 import HackStatCore
 
-struct SubmissionsGraph: View {
+public struct SubmissionsGraph: View {
     let submissions: [Submission]
 	
 	@Environment(SettingsViewModel.self) private var settingsViewModel
+	
+	public init(submissions: [Submission]) {
+		self.submissions = submissions
+	}
     
     private let weeksToShow = 52
     private let daysInWeek = 7
@@ -57,7 +61,7 @@ struct SubmissionsGraph: View {
         return dates
     }
 
-    var body: some View {
+	public var body: some View {
         let dates = dateCells
 		let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
 		let endOfToday = calendar.startOfDay(for: tomorrow)

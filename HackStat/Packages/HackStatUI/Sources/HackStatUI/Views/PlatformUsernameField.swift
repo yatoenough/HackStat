@@ -7,13 +7,19 @@
 
 import SwiftUI
 
-struct PlatformUsernameField: View {
+public struct PlatformUsernameField: View {
 	let title: String
 	let image: Image
 	
 	@Binding var username: String
 	
-	var body: some View {
+	public init(title: String, image: Image, username: Binding<String>) {
+		self.title = title
+		self.image = image
+		self._username = username
+	}
+	
+	public var body: some View {
 		HStack {
 			PlatformUsernameLabel(title: title, image: image)
 
@@ -26,5 +32,5 @@ struct PlatformUsernameField: View {
 }
 
 #Preview {
-	PlatformUsernameField(title: "GitHub", image: Image(.github), username: .constant(""))
+	PlatformUsernameField(title: "Platform", image: Image(systemName: "person.crop.circle"), username: .constant(""))
 }

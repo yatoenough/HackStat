@@ -8,10 +8,10 @@
 import SwiftUI
 import HackStatModels
 
-struct PlatformStatusIndicator: View {
-	let status: PlatformStatus
+public struct PlatformStatusIndicator: View {
+	public let status: PlatformStatus
 	
-	var body: some View {
+	public var body: some View {
 		Circle()
 			.fill(statusColor)
 			.frame(width: 8, height: 8)

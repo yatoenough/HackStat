@@ -8,18 +8,18 @@
 import SwiftUI
 import HackStatModels
 
-struct PlatformUsernameLabel: View {
+public struct PlatformUsernameLabel: View {
 	let title: String
 	let image: Image
 	let status: PlatformStatus?
 	
-	init(title: String, image: Image, status: PlatformStatus? = nil) {
+	public init(title: String, image: Image, status: PlatformStatus? = nil) {
 		self.title = title
 		self.image = image
 		self.status = status
 	}
 	
-	var body: some View {
+	public var body: some View {
 		Label {
 			Text(title.isEmpty ? "Username was not provided" : title)
 		} icon: {
@@ -38,5 +38,5 @@ struct PlatformUsernameLabel: View {
 }
 
 #Preview {
-	PlatformUsernameLabel(title: "GitHub", image: Image(.github))
+	PlatformUsernameLabel(title: "Platform", image: Image(systemName: "person.crop.circle"))
 }

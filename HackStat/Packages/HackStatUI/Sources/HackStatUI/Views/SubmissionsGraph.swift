@@ -109,13 +109,13 @@ public struct SubmissionsGraph: View {
 
 		switch percentage {
 		case 0..<0.1:
-			return .accentColor.opacity(0.2)
+			return .accentColor.opacity(0.35)
 		case 0.1..<0.3:
-			return .accentColor.opacity(0.4)
+			return .accentColor.opacity(0.55)
 		case 0.3..<0.5:
-			return .accentColor.opacity(0.6)
+			return .accentColor.opacity(0.65)
 		case 0.5..<0.75:
-			return .accentColor.opacity(0.8)
+			return .accentColor.opacity(0.9)
 		default:
 			return .accentColor
 		}

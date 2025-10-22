@@ -13,7 +13,7 @@ HackStat brings together your coding statistics from GitHub, Codewars, and other
 
 - Open the project in Xcode
 - Select your development team in the project settings
-- Create a ```Credentials``` struct line in ```HackStat/App/Credentials.example.swift``` and insert your API key
+- Create a ```Credentials``` struct like in ```HackStat/App/Credentials.example.swift``` and insert your API key
 - Use the app
 
 ## Roadmap

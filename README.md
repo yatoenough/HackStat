@@ -9,6 +9,12 @@
 A unified iOS app for tracking your coding activity and maintaining streaks across multiple platforms.
 HackStat brings together your coding statistics from GitHub, Codewars, and other platforms into a single, beautiful interface. Track your progress, maintain your streaks, and stay motivated with comprehensive visual streak graphs.
 
+### Currently supported platforms
+- GitHub
+- GitLab
+- LeetCode
+- CodeWars
+
 ## Build and run
 
 - Open the project in Xcode

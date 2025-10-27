@@ -14,9 +14,7 @@ private struct CodeWarsResponse: Codable {
 }
 
 private struct CodeWarsData: Codable {
-	let id, name, slug: String
 	let completedAt: Date
-	let completedLanguages: [String]
 }
 
 public struct CodeWarsSubmissionsProvider: SubmissionsProvider {
@@ -39,7 +37,20 @@ public struct CodeWarsSubmissionsProvider: SubmissionsProvider {
 				let (data, _) = try await URLSession.shared.data(from: url)
 				let decoder = JSONDecoder()
 
-				decoder.dateDecodingStrategy = .iso8601
+				decoder.dateDecodingStrategy = .custom { decoder in
+					let container = try decoder.singleValueContainer()
+					let dateFormatter = DateFormatter()
+					
+					let string = try container.decode(String.self)
+					
+					dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+					dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+					dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+					
+					let date = dateFormatter.date(from: string)!
+					
+					return date
+				}
 
 				let response = try decoder.decode(CodeWarsResponse.self, from: data)
 				totalPages = response.totalPages

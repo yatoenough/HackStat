@@ -24,14 +24,6 @@ struct RootView: View {
 					Label("Settings", systemImage: "gear")
 				}
 		}
-		.task {
-			await fetchSubmissions()
-		}
-	}
-
-	private func fetchSubmissions() async {
-		let usernames = settingsViewModel.resolveUsernames()
-		await submissionsViewModel.fetchSubmissions(for: usernames)
 	}
 }
 

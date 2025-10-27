@@ -38,8 +38,9 @@ public class SubmissionsViewModel {
 	}
 
 	public func fetchSubmissions(for usernames: Usernames) async {
+		var allResults = [Submission]()
+		
 		await withTaskGroup(of: (platform: PlatformType, submissions: [Submission], hasError: Bool).self) { group in
-			var allResults = [Submission]()
 
 			for provider in providers {
 				let username = getUsername(for: provider.platformType, from: usernames)
@@ -64,12 +65,11 @@ public class SubmissionsViewModel {
 			for await result in group {
 				allResults.append(contentsOf: result.submissions)
 			}
-
-			submissions = allResults
-				.filter(isSubmissionInLastYear)
-				.sorted { $0.date > $1.date }
-			
 		}
+		
+		submissions = allResults
+			.filter(isSubmissionInLastYear)
+			.sorted { $0.date > $1.date }
 	}
 
 	private func getUsername(for platformType: PlatformType, from usernames: Usernames) -> String {

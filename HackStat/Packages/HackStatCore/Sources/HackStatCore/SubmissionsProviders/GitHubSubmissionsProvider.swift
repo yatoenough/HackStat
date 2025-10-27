@@ -77,7 +77,7 @@ public struct GitHubSubmissionsProvider: SubmissionsProvider {
 			
 			let contributions = weeks.flatMap { week in
 				week.contributionDays.map { day in
-					Submission(date: day.date, submissionsCount: day.contributionCount)
+					Submission(date: day.date, submissionsCount: day.contributionCount, platformType: platformType)
 				}
 			}
 

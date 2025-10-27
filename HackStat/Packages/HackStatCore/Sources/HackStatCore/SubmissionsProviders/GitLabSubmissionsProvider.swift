@@ -29,9 +29,9 @@ public struct GitLabSubmissionsProvider: SubmissionsProvider {
 			for (date, count) in calendarResponse {
 				let dateFormatter = DateFormatter()
 				dateFormatter.dateFormat = "yyyy-MM-dd"
-				
+
 				let submissionDate = dateFormatter.date(from: date)!
-				submissions.append(Submission(date: submissionDate, submissionsCount: count))
+				submissions.append(Submission(date: submissionDate, submissionsCount: count, platformType: platformType))
 			}
 			return .success(submissions)
 		} catch {

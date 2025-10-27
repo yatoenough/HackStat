@@ -55,9 +55,9 @@ public struct LeetCodeSubmissionsProvider: SubmissionsProvider {
 				guard let timeInterval = TimeInterval(key) else {
 					return nil
 				}
-				
+
 				let date = Date(timeIntervalSince1970: timeInterval)
-				return Submission(date: date, submissionsCount: value)
+				return Submission(date: date, submissionsCount: value, platformType: platformType)
 			}
 
 			return .success(parsedSubmissions)

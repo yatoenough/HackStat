@@ -1,0 +1,40 @@
+//
+//  StatsSection.swift
+//  HackStat
+//
+//  Created by Nikita Shyshkin on 27/10/2025.
+//
+
+import SwiftUI
+import HackStatCore
+import HackStatModels
+
+struct StatsSection: View {
+    let submissionsViewModel: SubmissionsViewModel
+
+    var totalSubmissions: Int {
+        submissionsViewModel.submissions.reduce(0) { $0 + $1.submissionsCount }
+    }
+
+    var thisMonthSubmissions: Int {
+        let calendar = Calendar.current
+        let now = Date()
+        let monthAgo = calendar.date(byAdding: .month, value: -1, to: now) ?? now
+
+        return submissionsViewModel.submissions
+            .filter { $0.date >= monthAgo && $0.date <= now }
+            .reduce(0) { $0 + $1.submissionsCount }
+    }
+
+    var body: some View {
+        HStack(spacing: 12) {
+            StatCard(number: totalSubmissions, label: "Total")
+            StatCard(number: thisMonthSubmissions, label: "This Month")
+            StatCard(number: submissionsViewModel.currentStreak, label: "Streak")
+        }
+    }
+}
+
+#Preview {
+    StatsSection(submissionsViewModel: SubmissionsViewModel.previewInstance)
+}

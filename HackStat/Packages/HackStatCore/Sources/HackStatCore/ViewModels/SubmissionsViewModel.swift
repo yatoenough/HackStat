@@ -7,14 +7,29 @@
 
 import Foundation
 import HackStatModels
-import HackStatNetworkUtils
 
 @MainActor
 @Observable
 public class SubmissionsViewModel {
 	private(set) public var submissions = [Submission]()
-	private(set) public var loadingState = LoadingState.idle
-	private(set) public var platformStates = PlatformLoadingState()
+
+	public var currentStreak: Int {
+		var streak = 0
+		let calendar = Calendar.current
+		var currentDate = Date()
+
+		for submission in submissions {
+			let daysBetween = calendar.dateComponents([.day], from: submission.date, to: currentDate).day ?? 0
+			if daysBetween == streak {
+				streak += 1
+				currentDate = submission.date
+			} else {
+				break
+			}
+		}
+
+		return streak
+	}
 
 	private let providers: [SubmissionsProvider]
 
@@ -23,44 +38,12 @@ public class SubmissionsViewModel {
 	}
 
 	public func fetchSubmissions(for usernames: Usernames) async {
-		loadingState = .loading
-
-		for provider in providers {
-			let username: String
-			
-			switch provider.platformType {
-			case .github:
-				username = usernames.github
-			case .gitlab:
-				username = usernames.gitlab
-			case .codewars:
-				username = usernames.codewars
-			case .leetcode:
-				username = usernames.leetcode
-			}
-			
-			let status: PlatformStatus = (username.isEmpty != false) ? .skipped : .loading
-			platformStates.setStatus(for: provider.platformType, status: status)
-		}
-		
 		await withTaskGroup(of: (platform: PlatformType, submissions: [Submission], hasError: Bool).self) { group in
 			var allResults = [Submission]()
-			var hasAnyErrors = false
-			
+
 			for provider in providers {
-				let username: String
-				
-				switch provider.platformType {
-				case .github:
-					username = usernames.github
-				case .gitlab:
-					username = usernames.gitlab
-				case .codewars:
-					username = usernames.codewars
-				case .leetcode:
-					username = usernames.leetcode
-				}
-				
+				let username = getUsername(for: provider.platformType, from: usernames)
+
 				guard !username.isEmpty else {
 					continue
 				}
@@ -80,32 +63,28 @@ public class SubmissionsViewModel {
 
 			for await result in group {
 				allResults.append(contentsOf: result.submissions)
-				
-				let currentStatus = platformStates.getStatus(for: result.platform)
-				let finalStatus: PlatformStatus
-				
-				switch currentStatus {
-				case .skipped:
-					finalStatus = .skipped
-				default:
-					finalStatus = result.hasError ? .failed : .success
-				}
-				
-				platformStates.setStatus(for: result.platform, status: finalStatus)
-				
-				if result.hasError {
-					hasAnyErrors = true
-				}
 			}
 
 			submissions = allResults
 				.filter(isSubmissionInLastYear)
 				.sorted { $0.date > $1.date }
 			
-			loadingState = submissions.isEmpty && hasAnyErrors ? .error("Error fetching submissions") : .loaded
 		}
 	}
-	
+
+	private func getUsername(for platformType: PlatformType, from usernames: Usernames) -> String {
+		switch platformType {
+		case .github:
+			return usernames.github
+		case .gitlab:
+			return usernames.gitlab
+		case .codewars:
+			return usernames.codewars
+		case .leetcode:
+			return usernames.leetcode
+		}
+	}
+
 	private func isSubmissionInLastYear(_ submission: Submission) -> Bool {
 		let calendar = Calendar.current
 		guard let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: Date()) else { return false }

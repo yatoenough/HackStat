@@ -50,13 +50,6 @@ public class SettingsViewModel {
 		self.firstWeekday = storage.firstWeekday
 	}
 
-	public func setUniversalUsername(_ username: String) {
-		githubUsername = username
-		gitlabUsername = username
-		codewarsUsername = username
-		leetcodeUsername = username
-	}
-
 	public func resolveUsernames() -> Usernames {
 		if useSameUsername {
 			return Usernames(

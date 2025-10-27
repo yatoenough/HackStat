@@ -50,6 +50,7 @@ public struct CodeWarsSubmissionsProvider: SubmissionsProvider {
 					let newSubmission = Submission(
 						date: date,
 						submissionsCount: fetchedSubmissions.count,
+						platformType: platformType
 					)
 
 					submissions.append(newSubmission)

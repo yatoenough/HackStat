@@ -2,7 +2,9 @@
 
 <div align="center">
   <img src="Screenshots/Submissions.png" height=500/>
+  <img src="Screenshots/SubmissionsDark.png" height=500/>
   <img src="Screenshots/Settings.png" height=500/>
+  <img src="Screenshots/SettingsDark.png" height=500/>
 </div>
 <br>
 
@@ -23,8 +25,8 @@ HackStat brings together your coding statistics from GitHub, Codewars, and other
 - Use the app
 
 ## Roadmap
-- [X] Core app features 
+- [X] Core app features
+- [X] Streak goals and notifications
 - [ ] Support for more platforms
 - [ ] Widget support
-- [ ] Custom streak goals and notifications
 - [ ] Publish to AppStore

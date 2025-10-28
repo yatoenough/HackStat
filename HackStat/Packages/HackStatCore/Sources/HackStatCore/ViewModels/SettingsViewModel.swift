@@ -52,18 +52,20 @@ public class SettingsViewModel {
 
 	public func resolveUsernames() -> Usernames {
 		if useSameUsername {
+			let username = universalUsername.trimmingCharacters(in: .whitespacesAndNewlines)
+			
 			return Usernames(
-				github: universalUsername,
-				gitlab: universalUsername,
-				codewars: universalUsername,
-				leetcode: universalUsername
+				github: username,
+				gitlab: username,
+				codewars: username,
+				leetcode: username
 			)
 		} else {
 			return Usernames(
-				github: githubUsername,
-				gitlab: gitlabUsername,
-				codewars: codewarsUsername,
-				leetcode: leetcodeUsername
+				github: githubUsername.trimmingCharacters(in: .whitespacesAndNewlines),
+				gitlab: gitlabUsername.trimmingCharacters(in: .whitespacesAndNewlines),
+				codewars: codewarsUsername.trimmingCharacters(in: .whitespacesAndNewlines),
+				leetcode: leetcodeUsername.trimmingCharacters(in: .whitespacesAndNewlines)
 			)
 		}
 	}

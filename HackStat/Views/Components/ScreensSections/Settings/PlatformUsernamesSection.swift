@@ -58,6 +58,7 @@ struct PlatformUsernamesSection: View {
                     username: settingsViewModel.leetcodeUsername
                 )
             }
+			.autocorrectionDisabled()
 			.opacity(settingsViewModel.useSameUsername.wrappedValue ? 0.5 : 1)
 			.disabled(settingsViewModel.useSameUsername.wrappedValue)
         }

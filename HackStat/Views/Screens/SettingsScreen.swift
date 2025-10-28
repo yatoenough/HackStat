@@ -39,7 +39,6 @@ struct SettingsScreen: View {
 						PlatformUsernamesSection(settingsViewModel: $settingsViewModel)
 							.onSubmit {
 								Task {
-									print("Hello")
 									await onUsernameChange()
 								}
 							}

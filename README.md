@@ -33,7 +33,7 @@ HackStat brings together your coding statistics from GitHub, Codewars, and other
 
 ## Roadmap
 - [X] Core app features
-- [X] Streak goals and notifications
+- [X] Streak goals
 - [ ] Support for more platforms
 - [ ] Widget support
 - [ ] Publish to AppStore

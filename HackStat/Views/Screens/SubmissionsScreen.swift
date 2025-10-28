@@ -69,6 +69,7 @@ struct SubmissionsScreen: View {
             }
             .navigationBarTitleDisplayMode(.inline)
 			.refreshable(action: onRefresh)
+			.scrollIndicators(.hidden)
         }
     }
 }

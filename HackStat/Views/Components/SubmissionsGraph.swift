@@ -79,6 +79,7 @@ public struct SubmissionsGraph: View {
                         }
                     }
                 }
+				.scrollIndicators(.hidden)
                 .onAppear {
                     proxy.scrollTo(weeksToShow - 1, anchor: .trailing)
                 }

@@ -14,23 +14,17 @@ struct RootView: View {
 
 	var body: some View {
 		TabView {
-			SubmissionsScreen {
-				Task {
-					await loadData()
+			SubmissionsScreen(onRefresh: loadData)
+				.tabItem {
+					Label("Submissions", systemImage: "arrow.up.arrow.down")
 				}
-			}
-			.tabItem {
-				Label("Submissions", systemImage: "arrow.up.arrow.down")
-			}
 
 			SettingsScreen()
 				.tabItem {
 					Label("Settings", systemImage: "gear")
 				}
 		}
-		.task {
-			await loadData()
-		}
+		.task(loadData)
 	}
 
 	private func loadData() async {

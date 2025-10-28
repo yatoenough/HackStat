@@ -12,11 +12,10 @@ import HackStatModels
 struct SubmissionsScreen: View {
 	@Environment(SubmissionsViewModel.self) private var submissionsViewModel
 	@Environment(SettingsViewModel.self) private var settingsViewModel
-    @State private var isRefreshing = false
 	
-	let onRefresh: () -> Void
+	let onRefresh: @Sendable () async -> Void
 	
-	init(onRefresh: @escaping () -> Void = {}) {
+	init(onRefresh: @Sendable @escaping () async -> Void = {}) {
 		self.onRefresh = onRefresh
 	}
 	
@@ -69,27 +68,8 @@ struct SubmissionsScreen: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: refreshData) {
-                        if isRefreshing {
-                            ProgressView()
-                                .tint(.purple)
-                        } else {
-                            Image(systemName: "arrow.clockwise")
-                                .foregroundColor(.purple)
-                        }
-                    }
-                    .disabled(isRefreshing)
-                }
-            }
+			.refreshable(action: onRefresh)
         }
-    }
-
-    private func refreshData() {
-		isRefreshing = true
-		onRefresh()
-		isRefreshing = false
     }
 }
 

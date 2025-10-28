@@ -19,7 +19,7 @@ struct RootView: View {
 					Label("Submissions", systemImage: "arrow.up.arrow.down")
 				}
 
-			SettingsScreen()
+			SettingsScreen(onUsernameChange: loadData)
 				.tabItem {
 					Label("Settings", systemImage: "gear")
 				}

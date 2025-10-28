@@ -10,6 +10,12 @@ import HackStatCore
 
 struct SettingsScreen: View {
 	@Environment(SettingsViewModel.self) private var settingsViewModel
+	
+	let onUsernameChange: () async -> Void
+	
+	init(onUsernameChange: @Sendable @escaping () async -> Void = {}) {
+		self.onUsernameChange = onUsernameChange
+	}
 
     var body: some View {
 		@Bindable var settingsViewModel = settingsViewModel
@@ -31,13 +37,19 @@ struct SettingsScreen: View {
 						GeneralSettingsSection(settingsViewModel: $settingsViewModel)
 
 						PlatformUsernamesSection(settingsViewModel: $settingsViewModel)
+							.onSubmit {
+								Task {
+									print("Hello")
+									await onUsernameChange()
+								}
+							}
 					}
 					.padding(.horizontal)
 					.padding(.top, 24)
 					.padding(.bottom, 20)
 				}
 			}
-			.scrollDismissesKeyboard(.immediately)
+			.scrollDismissesKeyboard(.never)
 			.textInputAutocapitalization(.never)
 			.animation(.easeInOut, value: settingsViewModel.useSameUsername)
 		}

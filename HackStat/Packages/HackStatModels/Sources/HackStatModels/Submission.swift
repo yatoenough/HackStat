@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Submission: Equatable, Sendable {
+public struct Submission: Equatable, Sendable, Hashable {
 	public var date: Date
 	public var submissionsCount: Int
 	public var platformType: PlatformType

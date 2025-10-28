@@ -49,7 +49,7 @@ struct InsightsSection: View {
 			return
 				"You're on a \(submissionsViewModel.currentStreak)-day streak! Keep it going to reach your personal best."
 		} else {
-			return "Start submitting today to build your first streak!"
+			return "Start submitting today to build your streak!"
 		}
 	}
 

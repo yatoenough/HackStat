@@ -19,9 +19,9 @@ public class SubmissionsViewModel {
 		let calendar = Calendar.current
 		var currentDate = Date()
 
-		for submission in submissions {
+		for submission in submissions.dropFirst() {
 			let daysBetween = calendar.dateComponents([.day], from: submission.date, to: currentDate).day ?? 0
-			if daysBetween == streak {
+			if daysBetween == 0 || daysBetween == 1 {
 				streak += 1
 				currentDate = submission.date
 			} else {

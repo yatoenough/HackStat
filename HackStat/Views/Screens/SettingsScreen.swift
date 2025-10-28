@@ -42,6 +42,11 @@ struct SettingsScreen: View {
 									await onUsernameChange()
 								}
 							}
+							.onChange(of: settingsViewModel.useSameUsername) { _, _ in
+								Task {
+									await onUsernameChange()
+								}
+							}
 					}
 					.padding(.horizontal)
 					.padding(.top, 24)

@@ -17,7 +17,7 @@ struct PlatformUsernamesSection: View {
                 .font(.system(size: 14, weight: .semibold))
                 .foregroundColor(.primary)
 
-            Toggle("Use same username for all", isOn: settingsViewModel.useSameUsername)
+            Toggle("Use same username for all platforms", isOn: settingsViewModel.useSameUsername)
                 .padding(14)
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(12)

@@ -27,8 +27,9 @@ struct PlatformCard: View {
 					.foregroundColor(.primary)
 
 				Text("\(platform.count) submissions")
-					.font(.system(size: 11))
+					.font(.system(size: 10))
 					.foregroundColor(.gray)
+					.lineLimit(1)
 			}
 
 			Spacer()

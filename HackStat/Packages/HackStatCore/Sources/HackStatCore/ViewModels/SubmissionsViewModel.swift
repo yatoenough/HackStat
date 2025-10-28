@@ -74,7 +74,6 @@ public class SubmissionsViewModel {
 			.filter(isSubmissionInLastYear)
 			.sorted { $0.date > $1.date }
 		
-		try! await Task.sleep(for: .seconds(2))
 		isLoading = false
 	}
 

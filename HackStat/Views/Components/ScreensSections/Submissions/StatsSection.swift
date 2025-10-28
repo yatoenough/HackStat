@@ -35,6 +35,7 @@ struct StatsSection: View {
             StatCard(number: submissionsViewModel.currentStreak, label: "Streak")
 				.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
         }
+		.animation(.easeInOut(duration: 0.5), value: submissionsViewModel.isLoading)
     }
 }
 

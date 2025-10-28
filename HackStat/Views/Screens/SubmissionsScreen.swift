@@ -87,11 +87,9 @@ struct SubmissionsScreen: View {
     }
 
     private func refreshData() {
-        Task {
-            isRefreshing = true
-			onRefresh()
-            isRefreshing = false
-        }
+		isRefreshing = true
+		onRefresh()
+		isRefreshing = false
     }
 }
 

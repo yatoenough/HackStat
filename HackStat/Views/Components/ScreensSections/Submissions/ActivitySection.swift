@@ -51,6 +51,7 @@ struct ActivitySection: View {
 
             SubmissionsGraph(submissions: submissionsViewModel.submissions)
 				.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
+				.animation(.easeInOut(duration: 0.5), value: submissionsViewModel.isLoading)
         }
     }
 

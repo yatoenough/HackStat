@@ -27,13 +27,13 @@ public struct Submission: Equatable, Sendable {
 		var submissions = [Submission]()
 		let calendar = Calendar.current
 		let today = Date.now
-		let platforms: [PlatformType] = [.github, .gitlab, .codewars, .leetcode]
+		let platformTypes: [PlatformType] = [.github, .gitlab, .codewars, .leetcode]
 
 		for i in 0..<365 {
 			if let date = calendar.date(byAdding: .day, value: -i, to: today) {
 				let randomSubmissions = Int.random(in: 0...10)
 				if randomSubmissions > 0 {
-					let platform = platforms.randomElement() ?? .github
+					let platform = platformTypes.randomElement() ?? .github
 					submissions.append(Submission(date: date, submissionsCount: randomSubmissions, platformType: platform))
 				}
 			}

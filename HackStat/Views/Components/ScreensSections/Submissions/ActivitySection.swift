@@ -50,7 +50,7 @@ struct ActivitySection: View {
             }
 
             SubmissionsGraph(submissions: submissionsViewModel.submissions)
-				.environment(submissionsViewModel)
+				.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
         }
     }
 

@@ -29,8 +29,11 @@ struct StatsSection: View {
     var body: some View {
         HStack(spacing: 12) {
             StatCard(number: totalSubmissions, label: "Total")
+				.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
             StatCard(number: thisMonthSubmissions, label: "This Month")
+				.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
             StatCard(number: submissionsViewModel.currentStreak, label: "Streak")
+				.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
         }
     }
 }

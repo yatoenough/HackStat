@@ -14,16 +14,28 @@ struct RootView: View {
 
 	var body: some View {
 		TabView {
-			SubmissionsScreen()
-				.tabItem {
-					Label("Submissions", systemImage: "arrow.up.arrow.down")
+			SubmissionsScreen {
+				Task {
+					await loadData()
 				}
+			}
+			.tabItem {
+				Label("Submissions", systemImage: "arrow.up.arrow.down")
+			}
 
 			SettingsScreen()
 				.tabItem {
 					Label("Settings", systemImage: "gear")
 				}
 		}
+		.task {
+			await loadData()
+		}
+	}
+
+	private func loadData() async {
+		let usernames = settingsViewModel.resolveUsernames()
+		await submissionsViewModel.fetchSubmissions(for: usernames)
 	}
 }
 

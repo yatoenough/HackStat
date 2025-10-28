@@ -12,6 +12,7 @@ import HackStatModels
 @Observable
 public class SubmissionsViewModel {
 	private(set) public var submissions = [Submission]()
+	private(set) public var isLoading = false
 
 	public var currentStreak: Int {
 		var streak = 0
@@ -38,6 +39,7 @@ public class SubmissionsViewModel {
 	}
 
 	public func fetchSubmissions(for usernames: Usernames) async {
+		isLoading = true
 		var allResults = [Submission]()
 		
 		await withTaskGroup(of: (platform: PlatformType, submissions: [Submission], hasError: Bool).self) { group in
@@ -67,9 +69,13 @@ public class SubmissionsViewModel {
 			}
 		}
 		
+		
 		submissions = allResults
 			.filter(isSubmissionInLastYear)
 			.sorted { $0.date > $1.date }
+		
+		try! await Task.sleep(for: .seconds(2))
+		isLoading = false
 	}
 
 	private func getUsername(for platformType: PlatformType, from usernames: Usernames) -> String {

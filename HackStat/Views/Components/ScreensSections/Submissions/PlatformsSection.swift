@@ -62,63 +62,7 @@ struct PlatformsSection: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                 ForEach(platforms) { platform in
                     PlatformCard(platform: platform)
-                }
-            }
-        }
-    }
-}
-
-struct Platform: Identifiable {
-    let id = UUID()
-    let name: String
-    let emoji: String
-    let count: Int
-    let color: Color
-    let platformType: PlatformType
-}
-
-struct PlatformCard: View {
-    let platform: Platform
-    @State private var isPressed = false
-
-    var body: some View {
-        HStack(spacing: 10) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(platform.color)
-                    .frame(width: 32, height: 32)
-
-                Text(platform.emoji)
-                    .font(.system(size: 18))
-            }
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(platform.name)
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(.primary)
-
-                Text("\(platform.count) submissions")
-                    .font(.system(size: 11))
-                    .foregroundColor(.gray)
-            }
-
-            Spacer()
-        }
-        .padding(14)
-        .background(Color(UIColor.systemGray6))
-        .cornerRadius(12)
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isPressed ? .blue.opacity(0.7) : Color.clear, lineWidth: 2)
-        )
-        .scaleEffect(isPressed ? 0.98 : 1.0)
-        .onTapGesture {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                isPressed = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                withAnimation {
-                    isPressed = false
+						.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
                 }
             }
         }

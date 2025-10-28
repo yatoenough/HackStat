@@ -73,6 +73,7 @@ struct InsightsSection: View {
                 )
             }
         }
+		.skeleton(RoundedRectangle(cornerRadius: 12), isLoading: submissionsViewModel.isLoading)
     }
 }
 

@@ -14,6 +14,12 @@ struct SubmissionsScreen: View {
 	@Environment(SettingsViewModel.self) private var settingsViewModel
     @State private var isRefreshing = false
 	
+	let onRefresh: () -> Void
+	
+	init(onRefresh: @escaping () -> Void = {}) {
+		self.onRefresh = onRefresh
+	}
+	
 	var displayUsername: String{
 		if settingsViewModel.useSameUsername {
 			settingsViewModel.universalUsername.isEmpty ? "No Username" : settingsViewModel.universalUsername
@@ -78,20 +84,12 @@ struct SubmissionsScreen: View {
                 }
             }
         }
-        .task {
-            await loadInitialData()
-        }
-    }
-
-    private func loadInitialData() async {
-        let usernames = settingsViewModel.resolveUsernames()
-        await submissionsViewModel.fetchSubmissions(for: usernames)
     }
 
     private func refreshData() {
         Task {
             isRefreshing = true
-            await loadInitialData()
+			onRefresh()
             isRefreshing = false
         }
     }
